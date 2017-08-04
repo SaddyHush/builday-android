@@ -37,27 +37,4 @@
         app:pressedTranslationZ="12dp"
         tools:ignore="NotSibling" />
 
-    <TextView
-        android:id="@+id/tv_statusPlace"
-        android:layout_width="301dp"
-        android:layout_height="72dp"
-        android:text="TextView" />
-
-    <Button
-        android:id="@+id/bt_statusConfirm"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp"
-        android:background="@color/colorPrimaryDark"
-        android:paddingRight="40dp"
-        android:text="OK"
-        android:onClick="statusConfirm"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
-
 </android.support.design.widget.CoordinatorLayout>

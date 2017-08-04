@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
 
@@ -12,79 +13,80 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical">
 
         <LinearLayout
-                    android:id="@+id/vUserProfileRoot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:paddingBottom="24dp"
-                    android:paddingLeft="24dp"
-                    android:paddingRight="24dp"
-                    app:layout_collapseMode="parallax"
-                    android:weightSum="1">
+            android:id="@+id/vUserProfileRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:weightSum="1"
+            app:layout_collapseMode="parallax">
 
-                    <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.56"
+                android:clipChildren="false">
+
+                <ImageView
+                    android:id="@+id/ivUserProfilePhoto"
+                    android:layout_width="@dimen/user_profile_avatar_size"
+                    android:layout_height="@dimen/user_profile_avatar_size"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_person" />
+
+                <LinearLayout
+                    android:id="@+id/vUserDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clipChildren="false"
-                        android:layout_weight="0.56">
+                        android:textColor="#ffffff"
+                        android:textSize="24sp" />
 
-                        <ImageView
-                            android:id="@+id/ivUserProfilePhoto"
-                            android:layout_width="@dimen/user_profile_avatar_size"
-                            android:layout_height="@dimen/user_profile_avatar_size"
-                            android:layout_marginRight="16dp"
-                            android:src="@drawable/ic_person" />
+                    <TextView
+                        android:id="@+id/tv_interest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#bbbbbb"
+                        android:textSize="15sp" />
 
-                        <LinearLayout
-                            android:id="@+id/vUserDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_workplace"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
 
-                            <TextView
-                                android:id="@+id/tv_name"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffff"
-                                android:textSize="24sp" />
+                    <Button
+                        android:id="@+id/btnEditInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/btn_following"
+                        android:text="Edit Information"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/tv_interest"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="#bbbbbb"
-                                android:textSize="15sp" />
+                </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tv_workplace"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textColor="#ffffff"
-                                android:textSize="15sp" />
-
-                            <Button
-                                android:id="@+id/btnEditInfo"
-                                android:layout_width="match_parent"
-                                android:layout_height="24dp"
-                                android:layout_marginRight="24dp"
-                                android:layout_marginTop="8dp"
-                                android:background="@drawable/btn_following"
-                                android:text="Edit Information"
-                                android:textColor="#ffffff"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -113,8 +115,8 @@
                     android:id="@+id/confirmStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OK"
-                    android:onClick="statusConfirm"/>
+                    android:onClick="statusConfirm"
+                    android:text="OK" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -125,10 +127,10 @@
         </LinearLayout>
 
 
-        <!--<include-->
-            <!--layout="@layout/content_main"-->
-            <!--android:layout_height="394dp" />-->
+        <include
+            layout="@layout/content_main"
+            android:layout_height="394dp" />
 
 
     </android.support.design.widget.CoordinatorLayout>
-</RelativeLayout>
+</LinearLayout>

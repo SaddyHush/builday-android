@@ -37,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -51,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private TextView name;
     private final int GALLERY_ACTIVITY_CODE=200;
     private final int RESULT_CROP = 400;
+    private int statusInd;
 
     private SharedPreferences mSharedPreferences;
     private String mToken;
@@ -63,8 +65,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private Bitmap selectedBitmap;
 
     private CompositeSubscription mSubscriptions;
-    private int n = 0;
-
     private Button editButton;
     private TextView tv_interest;
     private TextView tv_workplace;
@@ -73,41 +73,52 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private LinearLayoutManager mLinearLayoutManager;
     private ArrayList<Status> statuses;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_profile);
-            mSubscriptions = new CompositeSubscription();
-            initViews();
-            initSharedPreferences();
-            loadProfile();
-            setRecyclerViewScrollListener();
-        }
+        setContentView(R.layout.activity_profile);
+        mSubscriptions = new CompositeSubscription();
+        initViews();
+        initSharedPreferences();
+        loadProfile();
+        setRecyclerViewScrollListener();
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (statuses.size() == 0) {
-            requestStatus(0);
-            requestStatus(1);
-            requestStatus(2);
-            requestStatus(3);
-            requestStatus(4);
-            requestStatus(5);
-        }
+        getStatusAmount();
 
     }
+    private void getStatusAmount(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getStatusAmount(mEmail)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::setStatusInd,this::handleStatusIndError));
+    }
+
+    private void setStatusInd(int response){
+        statusInd = --response;
+        if (statuses.size() == 0 && statusInd != -1) {
+            requestStatus(statusInd--);
+        }
+    }
+
+    private void handleStatusIndError(Throwable error){
+        getStatusAmount();
+    }
+
     public void requestStatus(int n){
         mSubscriptions.add(NetworkUtil.getRetrofit().getStatus(mEmail, n)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleStatusResponse,this::handleError));
+                .subscribe(v -> handleStatusResponse(v, n),this::handleError));
     }
-    private void handleStatusResponse(String status) {
+    private void handleStatusResponse(String status, int n) {
         String fullName = user.getName() + " " + user.getSurname();
-        Status s = new Status(fullName, status);
+        Status s = new Status(fullName, status, n);
         statuses.add(s);
+        Collections.sort(statuses);
         mAdapter.notifyItemInserted(statuses.size());
     }
 
@@ -115,16 +126,17 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         return mLinearLayoutManager.findLastVisibleItemPosition();
     }
     private void setRecyclerViewScrollListener() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                int totalItemCount = mRecyclerView.getLayoutManager().getItemCount();
-                if (totalItemCount == getLastVisibleItemPosition() + 1 ) {
-                    requestStatus(n++);
-                }
-            }
-        });
+        mRecyclerView.addOnScrollListener(new
+                                                  RecyclerView.OnScrollListener() {
+                                                      @Override
+                                                      public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                                          super.onScrollStateChanged(recyclerView, newState);
+                                                          int totalItemCount = mRecyclerView.getLayoutManager().getItemCount();
+                                                          if (totalItemCount == getLastVisibleItemPosition() + 1 && statusInd != -1) {
+                                                              requestStatus(statusInd--);
+                                                          }
+                                                      }
+                                                  });
     }
 
     public void statusConfirm(View view){
@@ -145,7 +157,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 .subscribe(this::handleResponse,this::handleError));
     }
 
-
     private void updateProcess(User user) {
 
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).setUserChanges(mEmail, user)
@@ -154,18 +165,16 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 .subscribe(this::handleResponse,this::handleError));
     }
 
-
     private void handleResponse(Response response) {
 
         showSnackBarMessage(response.getMessage());
     }
 
-
     private void register(){
-       ByteArrayOutputStream stream = new ByteArrayOutputStream();
-       selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-       byte[] byteArray = stream.toByteArray();
-       String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
         user.setMainPhoto(encodedImage);
         updateProcess(user);
     }
@@ -199,41 +208,38 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         }
     }
 
-
     private void performCrop(String picUri) {
         try {
-            //Start Crop Activity
+//Start Crop Activity
 
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            // indicate image type and Uri
+// indicate image type and Uri
             File f = new File(picUri);
             Uri contentUri = Uri.fromFile(f);
 
             cropIntent.setDataAndType(contentUri, "image/*");
-            // set crop properties
+// set crop properties
             cropIntent.putExtra("crop", "true");
-            // indicate aspect of desired crop
+// indicate aspect of desired crop
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
-            // indicate output X and Y
+// indicate output X and Y
             cropIntent.putExtra("outputX", 280);
             cropIntent.putExtra("outputY", 280);
 
-            // retrieve data on return
+// retrieve data on return
             cropIntent.putExtra("return-data", true);
-            // start the activity - we handle returning in onActivityResult
+// start the activity - we handle returning in onActivityResult
             startActivityForResult(cropIntent, RESULT_CROP);
         }
-        // respond to users whose devices do not support the crop action
+// respond to users whose devices do not support the crop action
         catch (ActivityNotFoundException anfe) {
-            // display an error message
+// display an error message
             String errorMessage = "your device doesn't support the crop action!";
             Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
     }
-
-
 
     private void initViews() {
         profilePhoto = (ImageView) findViewById(R.id.ivUserProfilePhoto);
@@ -247,24 +253,22 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         statuses = new ArrayList<Status>();
-        mAdapter = new StatusRecyclerAdapter(statuses);
+        mAdapter = new
+                StatusRecyclerAdapter(statuses);
         mRecyclerView.setAdapter(mAdapter);
 
-
-
-
-            profilePhoto.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    try {
-                    //Start Activity To Select Image From Gallery
+        profilePhoto.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+//Start Activity To Select Image From Gallery
                     Intent gallery_Intent = new Intent(getApplicationContext(), GalleryUtil.class);
                     startActivityForResult(gallery_Intent, GALLERY_ACTIVITY_CODE);
                 }
-                    catch (Exception ex){
-                        Toast.makeText(getApplication().getApplicationContext(), ""+ex.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                    }
+                catch (Exception ex){
+                    Toast.makeText(getApplication().getApplicationContext(), ""+ex.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+        });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,7 +310,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     private void loadProfile() {
 
-       mSubscriptions.add(NetworkUtil.getRetrofit(mToken).getProfile(mEmail)
+        mSubscriptions.add(NetworkUtil.getRetrofit(mToken).getProfile(mEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
@@ -315,7 +319,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private void handleResponse(User user) {
         this.user = user;
         name.setText(user.getName() + " " + user.getSurname());
-        System.out.println(user.getWorkPlace());
         if(user.getWorkPlace() != null){
             tv_workplace.setText("Working at: " + user.getWorkPlace());
         }
@@ -330,7 +333,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
             profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
 
         }
-}
+    }
 
     private void handleError(Throwable error) {
 
@@ -373,4 +376,3 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     }
 }
-

@@ -39,4 +39,7 @@ public interface RetrofitInterface {
     @GET("users/{email}/status/{num}")
     Observable<String> getStatus(@Path("email") String email, @Path("num")int num);
 
+    @GET("users/{email}/status/size")
+    Observable<Integer > getStatusAmount(@Path("email") String email);
+
 }
