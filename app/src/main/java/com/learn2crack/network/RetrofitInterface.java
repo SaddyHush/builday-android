@@ -1,6 +1,7 @@
 package com.learn2crack.network;
 
 import com.learn2crack.model.Response;
+import com.learn2crack.model.Status;
 import com.learn2crack.model.User;
 
 import retrofit2.http.Body;
@@ -34,7 +35,7 @@ public interface RetrofitInterface {
     Observable<Response> resetPasswordFinish(@Path("email") String email, @Body User user);
 
     @POST("users/{email}/status")
-    Observable<Response> createStatus(@Path("email") String email, @Body User status);
+    Observable<Response> createStatus(@Path("email") String email, @Body Status status);
 
     @GET("users/{email}/status/{num}")
     Observable<String> getStatus(@Path("email") String email, @Path("num")int num);

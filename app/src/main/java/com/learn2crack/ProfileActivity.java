@@ -36,6 +36,7 @@ import com.learn2crack.utils.StatusRecyclerAdapter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -53,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private final int GALLERY_ACTIVITY_CODE=200;
     private final int RESULT_CROP = 400;
     private int statusInd;
+    private int statusSize;
 
     private SharedPreferences mSharedPreferences;
     private String mToken;
@@ -99,6 +101,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     private void setStatusInd(int response){
         statusInd = --response;
+        statusSize = statusInd;
         if (statuses.size() == 0 && statusInd != -1) {
             requestStatus(statusInd--);
         }
@@ -145,16 +148,15 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         if(status.equals("")){
             return;
         }
-        User user1 = new User();
-        user1.setStatus(status);
-        addStatus(user1);
+        Status status1 = new Status(null, status, 0);
+        addStatus(status1);
     }
-    private void addStatus(User status) {
+    private void addStatus(Status status) {
 
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).createStatus(mEmail, status)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::handleStatusConfirm,this::handleError));
     }
 
     private void updateProcess(User user) {
@@ -165,8 +167,13 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 .subscribe(this::handleResponse,this::handleError));
     }
 
-    private void handleResponse(Response response) {
+    private void handleStatusConfirm(Response response){
+        statusSize++;
+            requestStatus(statusSize);
+        showSnackBarMessage(response.getMessage());
+    }
 
+    private void handleResponse(Response response) {
         showSnackBarMessage(response.getMessage());
     }
 
@@ -277,6 +284,11 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
             }
         });
 
+    }
+
+    public void startMapActivity(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
     }
 
     private void initSharedPreferences() {
