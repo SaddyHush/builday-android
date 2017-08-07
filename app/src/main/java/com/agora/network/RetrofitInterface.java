@@ -1,5 +1,6 @@
 package com.agora.network;
 
+import com.agora.model.Event;
 import com.agora.model.Response;
 import com.agora.model.Status;
 import com.agora.model.User;
@@ -45,5 +46,8 @@ public interface RetrofitInterface {
 
     @GET("users/{email}/status/size")
     Observable<Integer > getStatusAmount(@Path("email") String email);
+
+    @POST("events/upload/{email}")
+    Observable<Response> uploadEvent(@Path("email") String email, @Body Event event);
 
 }

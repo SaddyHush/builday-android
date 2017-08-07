@@ -1,7 +1,6 @@
 package com.agora.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by asadzeynal on 8/7/17.
@@ -11,11 +10,19 @@ public class Event {
     private String ownerEmail;
     private ArrayList<String>  joinedUsers;
     private int usersLimit;
-    private String createdAt;
-    private float lat;
-    private float lng;
+    private String created_at;
+    private double lat;
+    private double lng;
     private String interest;
     private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getOwnerEmail() {
         return ownerEmail;
@@ -41,27 +48,27 @@ public class Event {
         this.usersLimit = usersLimit;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public void setLng(float lng) {
+    public void setLng(double lng) {
         this.lng = lng;
     }
 

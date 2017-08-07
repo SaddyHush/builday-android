@@ -24,11 +24,10 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.agora.MainActivity"
+            android:name=".MainActivity"
             android:label="BuilDay"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.LoginRegister"
-            >
+            android:theme="@style/AppTheme.LoginRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,11 +47,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.agora.ProfileActivity"
+            android:name=".ProfileActivity"
             android:theme="@style/AppTheme.Profile">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </activity>
-        <activity android:name="com.agora.Animation.GalleryUtil" />
+        <activity android:name=".Animation.GalleryUtil" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -70,9 +69,11 @@
         <!-- android:name="com.google.android.maps.v2.API_KEY" -->
         <!-- android:value="AIzaSyBtBNMo3JTnqFKpWl-kX22pzY50otnQQuo" /> -->
         <activity
-            android:name="com.agora.MapsActivity"
+            android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name="com.agora.EditPersonalInfo"></activity>
+        <activity android:name=".EditPersonalInfo" />
+        <activity android:name=".CreateEvent"
+            android:theme="@style/AppTheme.LoginRegister"></activity>
     </application>
 
 </manifest>

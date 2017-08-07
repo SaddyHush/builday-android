@@ -2,11 +2,14 @@ package com.agora;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -27,23 +30,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
-    private Marker mLocationMarker;
     private static final int LOCATION_REQUEST=3337;
     private boolean first;
     private static final String[] LOCATION_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private Marker userClick;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             checkLocationPermission();
         }
         init();
-        setContentView(R.layout.activity_maps);
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
         first = true;
 
@@ -58,9 +63,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                mMap.clear();
                 mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.addMarker(markerOptions);
+                if (userClick != null) {
+                    userClick.remove();
+                }
+                userClick = mMap.addMarker(markerOptions);
             }
         });
         mMap.setMyLocationEnabled(true);
@@ -75,6 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private void init(){
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
         mLocationCallback = new LocationCallback() {
             @Override
@@ -82,15 +90,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (Location location : locationResult.getLocations()) {
                     LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
                     float zoomLevel = 16.0f;
-//                    MarkerOptions marker = new MarkerOptions();
-//                    marker.position(userLocation).title("I am here!");
-//                    boolean first = false;
-//                    if (mLocationMarker != null) {
-//                        mLocationMarker.remove();
-//                    } else {
-//                        first = true;
-//                    }
-//                    mLocationMarker = mMap.addMarker(marker);
                     if(first) {
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, zoomLevel));
                         first = false;
@@ -98,6 +97,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             };
         };
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (userClick == null){
+                    Toast toast = Toast.makeText(MapsActivity.this, "You have not selected a place!", Toast.LENGTH_LONG);
+                    toast.show();
+                } else {
+                    Intent intent = new Intent(MapsActivity.this, CreateEvent.class);
+                    intent.putExtra("position", userClick.getPosition());
+                    startActivity(intent);
+                }
+            }
+        });
         startLocationUpdates();
     }
 
