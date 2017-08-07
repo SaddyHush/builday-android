@@ -129,7 +129,7 @@
         </LinearLayout>
 
 
-        <include layout="@layout/content_main" />
+        <include layout="@layout/fab_profile_map" />
 
 
     </android.support.design.widget.CoordinatorLayout>

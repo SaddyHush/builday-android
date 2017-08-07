@@ -1,4 +1,4 @@
-package com.learn2crack.model;
+package com.agora.model;
 
 
 public class User {

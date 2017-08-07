@@ -1,4 +1,4 @@
-package com.learn2crack.utils;
+package com.agora.utils;
 
 public class Constants {
   public static final String BASE_URL = "http://ec2-34-200-255-76.compute-1.amazonaws.com:8080/api/v1/";

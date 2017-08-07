@@ -1,4 +1,4 @@
-package com.learn2crack.utils;
+package com.agora.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.learn2crack.R;
-import com.learn2crack.model.Status;
+import com.agora.R;
+import com.agora.model.Status;
 
 import java.util.ArrayList;
 /**

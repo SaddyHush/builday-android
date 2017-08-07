@@ -1,4 +1,4 @@
-package com.learn2crack.model;
+package com.agora.model;
 
 import android.support.annotation.NonNull;
 

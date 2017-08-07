@@ -1,4 +1,4 @@
-package com.learn2crack;
+package com.agora;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.learn2crack.model.Response;
-import com.learn2crack.model.User;
-import com.learn2crack.network.NetworkUtil;
-import com.learn2crack.utils.Constants;
+import com.agora.model.Response;
+import com.agora.model.User;
+import com.agora.network.NetworkUtil;
+import com.agora.utils.Constants;
 
 import java.io.IOException;
 

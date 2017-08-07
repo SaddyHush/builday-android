@@ -1,8 +1,8 @@
-package com.learn2crack.network;
+package com.agora.network;
 
-import com.learn2crack.model.Response;
-import com.learn2crack.model.Status;
-import com.learn2crack.model.User;
+import com.agora.model.Response;
+import com.agora.model.Status;
+import com.agora.model.User;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -18,6 +18,9 @@ public interface RetrofitInterface {
 
     @POST("authenticate")
     Observable<Response> login();
+
+    @POST("tokenauth/{email}")
+    Observable<Response> validateToken(@Path("email") String email);
 
     @GET("users/{email}")
     Observable<User> getProfile(@Path("email") String email);

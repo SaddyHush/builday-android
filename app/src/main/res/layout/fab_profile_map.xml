@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.learn2crack.ProfileActivity"
+    tools:context="com.agora.ProfileActivity"
     tools:showIn="@layout/activity_profile">
 
 
@@ -23,7 +23,6 @@
         app:elevation="0dp"
         app:layout_anchorGravity="center_vertical|right"
         app:pressedTranslationZ="12dp"
-        tools:ignore="NotSibling"
-        android:onClick="startMapActivity"/>
+        tools:ignore="NotSibling"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.learn2crack.utils;
+package com.agora.utils;
 
 import android.text.TextUtils;
 import android.util.Patterns;

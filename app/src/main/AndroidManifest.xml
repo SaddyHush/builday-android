@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.learn2crack">
+    package="com.agora">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,8 +24,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
-            android:label="BuilDayChik"
+            android:name="com.agora.MainActivity"
+            android:label="BuilDay"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.LoginRegister"
             >
@@ -43,16 +43,16 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="learn2crack"
+                    android:host="agora"
                     android:scheme="http" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name="com.agora.ProfileActivity"
             android:theme="@style/AppTheme.Profile">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </activity>
-        <activity android:name=".Animation.GalleryUtil" />
+        <activity android:name="com.agora.Animation.GalleryUtil" />
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -70,9 +70,9 @@
         <!-- android:name="com.google.android.maps.v2.API_KEY" -->
         <!-- android:value="AIzaSyBtBNMo3JTnqFKpWl-kX22pzY50otnQQuo" /> -->
         <activity
-            android:name=".MapsActivity"
+            android:name="com.agora.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".EditPersonalInfo"></activity>
+        <activity android:name="com.agora.EditPersonalInfo"></activity>
     </application>
 
 </manifest>

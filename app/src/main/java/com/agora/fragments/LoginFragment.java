@@ -1,4 +1,4 @@
-package com.learn2crack.fragments;
+package com.agora.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -20,11 +20,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.learn2crack.ProfileActivity;
-import com.learn2crack.R;
-import com.learn2crack.model.Response;
-import com.learn2crack.network.NetworkUtil;
-import com.learn2crack.utils.Constants;
+import com.agora.ProfileActivity;
+import com.agora.R;
+import com.agora.model.Response;
+import com.agora.network.NetworkUtil;
+import com.agora.utils.Constants;
 
 import java.io.IOException;
 
@@ -33,8 +33,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static com.learn2crack.utils.Validation.validateEmail;
-import static com.learn2crack.utils.Validation.validateFields;
+import static com.agora.utils.Validation.validateEmail;
+import static com.agora.utils.Validation.validateFields;
 
 public class LoginFragment extends Fragment {
 
@@ -145,6 +145,9 @@ public class LoginFragment extends Fragment {
 
         try {
             Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            this.getActivity().getFragmentManager().popBackStack();
+//            this.getActivity().finishActivity(1234);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
 
