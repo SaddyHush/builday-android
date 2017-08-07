@@ -104,7 +104,7 @@ public class CreateEvent extends AppCompatActivity {
             Event event = new Event();
             event.setTitle(mEtTitle.getText().toString());
             event.setInterest(mEtInterest.getText().toString());
-            event.setUsersLimit(Integer.parseInt(mEtMaxUsers.getText().toString()));
+            event.setUsersLimit(Double.parseDouble(mEtMaxUsers.getText().toString()));
             event.setLat(lat);
             event.setLng(lng);
             event.setOwnerEmail(mEmail);
@@ -129,9 +129,11 @@ public class CreateEvent extends AppCompatActivity {
     }
     private void handleResponse(Response response){
         showToastMessage("Event created successfully");
+        mProgressbar.setVisibility(View.GONE);
         finish();
     }
     private void handleError(Throwable e){
+        mProgressbar.setVisibility(View.GONE);
 
         if (e instanceof HttpException) {
 

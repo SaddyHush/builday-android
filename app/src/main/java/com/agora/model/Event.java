@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Event {
     private String ownerEmail;
     private ArrayList<String>  joinedUsers;
-    private int usersLimit;
+    private double usersLimit;
     private String created_at;
     private double lat;
     private double lng;
@@ -40,11 +40,11 @@ public class Event {
         this.joinedUsers = joinedUsers;
     }
 
-    public int getUsersLimit() {
+    public double getUsersLimit() {
         return usersLimit;
     }
 
-    public void setUsersLimit(int usersLimit) {
+    public void setUsersLimit(double usersLimit) {
         this.usersLimit = usersLimit;
     }
 
