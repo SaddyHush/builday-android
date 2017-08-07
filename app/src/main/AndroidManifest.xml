@@ -51,6 +51,8 @@
             android:theme="@style/AppTheme.Profile">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </activity>
+        <activity android:name=".EditPersonalInfo"
+            android:theme="@style/AppTheme.EditPersonalInfo"/>
         <activity android:name=".Animation.GalleryUtil" />
 
         <!--
@@ -71,7 +73,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".EditPersonalInfo" />
         <activity android:name=".CreateEvent"
             android:theme="@style/AppTheme.LoginRegister"></activity>
     </application>

@@ -139,8 +139,10 @@
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/ti_password"
-                android:layout_marginTop="@dimen/button_margin"
+                android:layout_marginTop="24dp"
                 android:drawableRight="@drawable/ic_arrow_forward"
                 android:paddingLeft="@dimen/button_padding"
                 android:text="Register" />

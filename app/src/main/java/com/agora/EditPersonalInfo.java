@@ -38,7 +38,7 @@ public class EditPersonalInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
         setContentView(R.layout.activity_edit_personal_info);
         initView();
         mSubscriptions = new CompositeSubscription();
@@ -48,7 +48,7 @@ public class EditPersonalInfo extends AppCompatActivity {
     private void initView(){
         enterWorkDetails = (EditText) findViewById(R.id.enterYourWorkPlace);
         enterYourInterests = (EditText) findViewById(R.id.enterYourInterests);
-        enterInfoAboutYourself = (EditText) findViewById(R.id.tellSomethingAboutYourself);
+       // enterInfoAboutYourself = (EditText) findViewById(R.id.tellSomethingAboutYourself);
         submitInfoDetails = (Button) findViewById(R.id.bt_infosubmitbutton);
     }
 
