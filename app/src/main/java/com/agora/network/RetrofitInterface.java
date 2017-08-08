@@ -50,4 +50,7 @@ public interface RetrofitInterface {
     @POST("events/upload/{email}")
     Observable<Response> uploadEvent(@Path("email") String email, @Body Event event);
 
+    @GET("events")
+    Observable<Event[]> getEvents();
+
 }

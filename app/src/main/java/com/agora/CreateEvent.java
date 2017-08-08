@@ -94,10 +94,10 @@ public class CreateEvent extends AppCompatActivity {
             mTiInterest.setError("Interest should not be empty!");
         }
 
-        if (!validateFields(maxUsers.toString()) || maxUsers < 2) {
+        if (!validateFields(maxUsers.toString()) || maxUsers < 1) {
 
             err++;
-            mTiMaxUsers.setError("Limit should not be empty or less than 2!");
+            mTiMaxUsers.setError("Limit should not be empty or less than 1!");
         }
 
         if (err == 0) {
