@@ -6,7 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <include
+        android:id="@+id/vUserProfileRoot"
+        layout="@layout/toolbar"
+        ></include>
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -31,64 +37,63 @@
                 android:id="@+id/main.collapsing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.56"
-                android:clipChildren="false">
-
-                <ImageView
-                    android:id="@+id/ivUserProfilePhoto"
-                    android:layout_width="@dimen/user_profile_avatar_size"
-                    android:layout_height="@dimen/user_profile_avatar_size"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_person" />
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <LinearLayout
-                    android:id="@+id/vUserDetails"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_weight="0.56"
+                    android:clipChildren="false">
 
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/ivUserProfilePhoto"
+                        android:layout_width="@dimen/user_profile_avatar_size"
+                        android:layout_height="@dimen/user_profile_avatar_size"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/ic_person" />
+
+                    <LinearLayout
+                        android:id="@+id/vUserDetails"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textSize="24sp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_interest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#bbbbbb"
-                        android:textSize="15sp" />
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textSize="24sp" />
 
-                    <TextView
-                        android:id="@+id/tv_workplace"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textSize="15sp" />
+                        <TextView
+                            android:id="@+id/tv_interest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#bbbbbb"
+                            android:textSize="15sp" />
 
-                    <Button
-                        android:id="@+id/btnEditInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:layout_marginRight="24dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/btn_following"
-                        android:text="Edit Information"
-                        android:textColor="#ffffff"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/tv_workplace"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:id="@+id/btnEditInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="24dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/btn_following"
+                            android:text="Edit Information"
+                            android:textColor="#ffffff"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -111,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
+                    android:hint="Status goes here..."
                     android:inputType="textMultiLine" />
 
                 <Button
