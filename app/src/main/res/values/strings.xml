@@ -6,4 +6,8 @@
     <string name="edit_info_btn">Edit Information</string>
     <string name="status_publish_btn">Publish</string>
     <string name="slot_for_status">Status goes here &#x2026;</string>
+    <string name="event_title">Event Title</string>
+    <string name="interest_in_map">Interest</string>
+    <string name="max_num_user">Number of users can join</string>
+    <string name="event_creation_hint">Creat Event</string>
 </resources>
