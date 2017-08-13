@@ -6,13 +6,9 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:orientation="vertical">
 
@@ -21,7 +17,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                android:contentDescription="@string/appName"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/ti_email"
@@ -35,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_email"
-                    android:hint="Email"
+                    android:drawableEnd="@drawable/ic_email"
+                    android:hint="@string/emailHint"
                     android:inputType="textEmailAddress" />
 
             </android.support.design.widget.TextInputLayout>
@@ -53,7 +51,7 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/passwordHint"
                     android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
@@ -65,8 +63,12 @@
                 android:layout_below="@+id/ti_password"
                 android:layout_marginTop="@dimen/button_margin"
                 android:drawableRight="@drawable/ic_arrow_forward"
+                android:drawableEnd="@drawable/ic_arrow_forward"
                 android:paddingLeft="@dimen/button_padding"
-                android:text="Login" />
+                android:paddingRight="48dp"
+                android:paddingEnd="48dp"
+                android:paddingStart="@dimen/button_padding"
+                android:text="@string/loginButton" />
 
             <TextView
                 android:id="@+id/tv_register"
@@ -97,5 +99,4 @@
                 android:visibility="gone" />
 
         </RelativeLayout>
-    </LinearLayout>
 </ScrollView>
