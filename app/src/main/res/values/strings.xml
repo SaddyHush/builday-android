@@ -2,6 +2,8 @@
     <string name="app_name"></string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_edit_personal_information">EditPersonalInformation</string>
-    <string name="backdrop_title">LOVE MUSICS</string>
-    <string name="backdrop_subtitle">This season top 20 music</string>
+    <string name="profile_photo_desc">Profile photo</string>
+    <string name="edit_info_btn">Edit Information</string>
+    <string name="status_publish_btn">Publish</string>
+    <string name="slot_for_status">Status goes here &#x2026;</string>
 </resources>

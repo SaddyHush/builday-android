@@ -11,8 +11,7 @@
 
     <include
         android:id="@+id/vUserProfileRoot"
-        layout="@layout/toolbar"
-        ></include>
+        layout="@layout/toolbar" />
 
 
     <android.support.design.widget.CoordinatorLayout
@@ -50,11 +49,13 @@
                         android:layout_width="@dimen/user_profile_avatar_size"
                         android:layout_height="@dimen/user_profile_avatar_size"
                         android:layout_marginRight="16dp"
-                        android:src="@drawable/ic_person" />
+                        android:src="@drawable/ic_person"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="@string/profile_photo_desc" />
 
                     <LinearLayout
                         android:id="@+id/vUserDetails"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -85,9 +86,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="24dp"
                             android:layout_marginRight="24dp"
+                            android:layout_marginEnd="24dp"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/btn_following"
-                            android:text="Edit Information"
+                            android:text="@string/edit_info_btn"
                             android:textColor="#ffffff"
                             android:textSize="12sp" />
 
@@ -112,11 +114,11 @@
 
                 <EditText
                     android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="Status goes here..."
+                    android:hint="@string/slot_for_status"
                     android:inputType="textMultiLine" />
 
                 <Button
@@ -124,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="statusConfirm"
-                    android:text="Publish" />
+                    android:text="@string/status_publish_btn" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
