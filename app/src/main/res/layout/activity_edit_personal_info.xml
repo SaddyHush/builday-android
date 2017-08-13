@@ -20,42 +20,34 @@
         app:layout_constraintVertical_bias="1.0"
         android:id="@+id/linearLayout"
         android:layout_marginRight="0dp"
-        app:layout_constraintRight_toLeftOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_marginEnd="0dp"
         app:layout_constraintHorizontal_bias="0.0">
 
         <EditText
             android:id="@+id/enterYourInterests"
-            android:layout_width="match_parent"
+            android:layout_width="342dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="53dp"
             android:ems="10"
-            android:hint="Share your interests..."
+            android:hint="@string/interest_in_profile"
             android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/enterYourWorkPlace"
-            android:layout_width="match_parent"
+            android:layout_width="342dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="280dp"
             android:ems="10"
-            android:hint="Share your workplace"
+            android:hint="@string/add_workplace_to_profile"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/bt_infosubmitbutton"
-            android:layout_width="match_parent"
+            android:layout_width="344dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_marginBottom="26dp"
-            android:elevation="0dp"
             android:onClick="submitInfo"
-            android:text="Submit" />
+            android:text="@string/submit_btn_interest_workplace" />
 
     </LinearLayout>
 
