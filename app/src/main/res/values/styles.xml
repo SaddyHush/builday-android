@@ -4,6 +4,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.EditPersonalInfo" parent="AppTheme">
@@ -20,7 +22,7 @@
 
     <style name="AppTheme.LoginRegister" parent="AppTheme">
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
@@ -32,8 +34,9 @@
 
     <style name="AppTheme.Profile" parent="AppTheme">
         <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">true</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@color/colorBlueGray</item>
+        <!--<item name="android:windowBackground">@color/colorPrimary</item>-->
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
@@ -59,5 +62,14 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="MapToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--<item name="actionOverflowButtonStyle">@style/ActionButtonOverflowStyle</item>-->
+        <!--<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>-->
+    </style>
 
 </resources>

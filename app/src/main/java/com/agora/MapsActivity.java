@@ -3,15 +3,22 @@ package com.agora;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
+import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.agora.model.Event;
 import com.agora.model.Response;
@@ -42,12 +49,13 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
-    private static final int LOCATION_REQUEST=3337;
+    private static final int INITIAL_REQUEST=1337;
+    private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
     private boolean first;
     private CompositeSubscription mSubscriptions;
     private ArrayList<Event> events;
@@ -55,15 +63,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Manifest.permission.ACCESS_FINE_LOCATION
     };
     Bitmap imageBitmap;
+    private ImageButton profileButton;
     private Marker userClick;
     private FloatingActionButton fab;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
-            checkLocationPermission();
+        while(!canAccessLocation()){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+            }
         }
         init();
         mSubscriptions = new CompositeSubscription();
@@ -136,20 +149,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 userClick = mMap.addMarker(markerOptions);
             }
         });
-        mMap.setMyLocationEnabled(true);
+
+        if (canAccessLocation()) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+            }
+        }
         checkLocationPermission();
         initEventsOnTheMap();
         createLocationRequest();
 
+    }
+    private boolean canAccessLocation() {
+        return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
     private void checkLocationPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         }
     }
+    private boolean hasPermission(String perm) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return(PackageManager.PERMISSION_GRANTED==checkSelfPermission(perm));
+        }
+        return true;
+    }
+
     private void init(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(null);
         imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(String.valueOf(R.drawable.ic_event), "drawable", getPackageName()));
         imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 64, 64, false);
+        profileButton = (ImageButton) findViewById(R.id.btnProfile);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
@@ -179,6 +213,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         startLocationUpdates();
     }
 
@@ -192,8 +233,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         return mLocationRequest;
     }
+
 
 }

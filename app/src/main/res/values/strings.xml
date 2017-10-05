@@ -12,6 +12,7 @@
     <string name="add_workplace_to_profile">Share your workplace</string>
     <string name="submit_btn_interest_workplace">Submit</string>
     <string name="interest_in_profile">Share your interests</string>
+    <string name="app_name">BuilDay</string>
     <string name="appName">BuilDay</string>
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>

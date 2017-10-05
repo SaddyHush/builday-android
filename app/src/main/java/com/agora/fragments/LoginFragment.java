@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.agora.MapsActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.agora.ProfileActivity;
@@ -144,7 +145,7 @@ public class LoginFragment extends Fragment {
         mEtPassword.setText(null);
 
         try {
-            Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            Intent intent = new Intent(getActivity(), MapsActivity.class);
             this.getActivity().getFragmentManager().popBackStack();
 //            this.getActivity().finishActivity(1234);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

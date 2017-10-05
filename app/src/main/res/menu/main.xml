@@ -5,16 +5,21 @@
     tools:context=".ProfileActivity">
     <item
         android:id="@+id/logout"
-        android:title="BuilDay"
+        android:title="Logout"
         android:orderInCategory="100"
-        android:icon="@drawable/logout"
         app:showAsAction="always"/>
 
-    <menu>
-        <item android:id="@+id/create_new"
-            android:title="ky "/>
-        <item android:id="@+id/open"
-            android:title="hi" />
-    </menu>/>
+        <item
+            android:id="@+id/action_settings"
+            android:orderInCategory="100"
+            android:title="Settings"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_user"
+            android:orderInCategory="300"
+            android:title="User"
+            android:icon="@drawable/ic_plus"
+            app:showAsAction="ifRoom"></item>
+
 
 </menu>

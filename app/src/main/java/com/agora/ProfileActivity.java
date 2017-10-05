@@ -393,13 +393,13 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         return true;
     }
     private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.vUserProfileRoot);
+//        toolbar = (Toolbar) findViewById(R.id.vUserProfileRoot);
         profilePhoto = (ImageView) findViewById(R.id.ivUserProfilePhoto);
         name = (TextView) findViewById(R.id.tv_name);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.btnMap);
         editButton = (Button) findViewById(R.id.btnEditInfo);
         tv_interest = (TextView) findViewById(R.id.tv_interest);
-        tv_workplace = (TextView) findViewById(R.id.tv_workplace);
+//        tv_workplace = (TextView) findViewById(R.id.tv_workplace);
         tv_status = (EditText) findViewById(R.id.tv_status);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
