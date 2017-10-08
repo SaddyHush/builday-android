@@ -17,6 +17,9 @@ public interface RetrofitInterface {
     @POST("users")
     Observable<Response> register(@Body User user);
 
+    @GET("users/user/{email}")
+    Observable<User> getOtherUserProfile(@Path("email") String email);
+
     @POST("authenticate")
     Observable<Response> login();
 
@@ -52,5 +55,10 @@ public interface RetrofitInterface {
 
     @GET("events")
     Observable<Event[]> getEvents();
+
+    @GET("events/{id}")
+    Observable<Event> getEvent(@Path("id") String email);
+
+
 
 }

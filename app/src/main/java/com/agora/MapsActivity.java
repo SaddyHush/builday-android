@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.agora.model.Event;
 import com.agora.model.Response;
+import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -123,15 +124,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
     private void showEventsOnMap(Event event){
+        getUserByEmail(event.getOwnerEmail(), event);
+    }
+
+    private void getUserByEmail(String email, Event event){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getOtherUserProfile(email)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(v -> continueShowEvent(v, event),this::handleError));
+    }
+
+
+    private void continueShowEvent(User user, Event event){
         double lat = event.getLat();
         double lng = event.getLng();
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(new LatLng(lat, lng));
-        markerOptions.title(event.getOwnerEmail().substring(0, event.getOwnerEmail().indexOf('@')) + ": " +event.getTitle());
-        markerOptions.snippet(event.getInterest()  + ". Created At: " + event.getCreated_at());
+        markerOptions.title(user.getName() + " " + user.getSurname() + " wants to " + event.getTitle());
+        markerOptions.snippet(event.getInterest());
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(imageBitmap));
         mMap.addMarker(markerOptions);
+        mMap.setOnMarkerClickListener(marker -> {
+            Intent intent = new Intent(MapsActivity.this, EventDisplayActivity.class);
+            intent.putExtra("eventID", event.get_id());
+            startActivity(intent);
+            return false;
+        });
     }
+
+
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

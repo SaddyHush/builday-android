@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Event {
+    private String _id;
     private String ownerEmail;
     private ArrayList<String>  joinedUsers;
     private double usersLimit;
@@ -22,6 +23,14 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getOwnerEmail() {
