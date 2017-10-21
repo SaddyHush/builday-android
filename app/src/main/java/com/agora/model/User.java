@@ -1,6 +1,8 @@
 package com.agora.model;
 
 
+import java.util.ArrayList;
+
 public class User {
 
     private String name;
@@ -14,8 +16,17 @@ public class User {
     private String workPlace;
     private String yourInterests;
     private String yourInfo;
+    private ArrayList<String> upcomingEvents;
 
     public User() {
+    }
+
+    public ArrayList<String> getUpcomingEvents() {
+        return upcomingEvents;
+    }
+
+    public void setUpcomingEvents(ArrayList<String> upcomingEvents) {
+        this.upcomingEvents = upcomingEvents;
     }
 
     public User(String status) {

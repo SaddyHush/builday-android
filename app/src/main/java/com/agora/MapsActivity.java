@@ -6,17 +6,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.location.Location;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuBuilder;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.Toolbar;
 
@@ -35,6 +34,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -43,6 +43,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -69,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FloatingActionButton fab;
 
     private Toolbar toolbar;
-
+    private HashMap<Marker, String> map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
             }
         }
+        map = new HashMap<Marker, String>();
         init();
         mSubscriptions = new CompositeSubscription();
         MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -86,6 +88,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         mapFragment.getMapAsync(this);
         first = true;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initEventsOnTheMap();
 
     }
 
@@ -118,6 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void handleResponse(Event[] events) {
+        mMap.clear();
         this.events = new ArrayList<>(Arrays.asList(events));
         for (Event e: this.events){
             showEventsOnMap(e);
@@ -142,23 +152,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerOptions.position(new LatLng(lat, lng));
         markerOptions.title(user.getName() + " " + user.getSurname() + " wants to " + event.getTitle());
         markerOptions.snippet(event.getInterest());
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(imageBitmap));
-        mMap.addMarker(markerOptions);
+//        MapUtils mapUtils = new MapUtils();
+//        Bitmap bitmap = mapUtils.GetBitmapMarker(getApplicationContext(), R.drawable.ic_event, "1");
+
+
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createStoreMarker(event.getTitle())));
+        map.put(mMap.addMarker(markerOptions), event.get_id());
         mMap.setOnMarkerClickListener(marker -> {
-            Intent intent = new Intent(MapsActivity.this, EventDisplayActivity.class);
-            intent.putExtra("eventID", event.get_id());
-            startActivity(intent);
-            return false;
+            if (marker.equals(userClick)) {
+                return true;
+            }
+                Intent intent = new Intent(MapsActivity.this, EventDisplayActivity.class);
+                intent.putExtra("eventID", map.get(marker));
+                startActivity(intent);
+                return false;
+
         });
     }
-
-
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        this, R.raw.map_style_json));
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -170,6 +188,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     userClick.remove();
                 }
                 userClick = mMap.addMarker(markerOptions);
+
             }
         });
 
@@ -258,6 +277,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         return mLocationRequest;
+    }
+    private Bitmap createStoreMarker(String title) {
+        View markerLayout = getLayoutInflater().inflate(R.layout.marker, null);
+
+        ImageView markerImage = (ImageView) markerLayout.findViewById(R.id.marker_image);
+        TextView markerRating = (TextView) markerLayout.findViewById(R.id.marker_text);
+        markerImage.setImageResource(R.drawable.ic_event);
+        markerRating.setText(title);
+
+        markerLayout.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        markerLayout.layout(0, 0, markerLayout.getMeasuredWidth(), markerLayout.getMeasuredHeight());
+
+        final Bitmap bitmap = Bitmap.createBitmap(markerLayout.getMeasuredWidth(), markerLayout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        markerLayout.draw(canvas);
+        return bitmap;
     }
 
 

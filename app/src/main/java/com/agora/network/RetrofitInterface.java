@@ -6,6 +6,7 @@ import com.agora.model.Status;
 import com.agora.model.User;
 
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -20,10 +21,10 @@ public interface RetrofitInterface {
     @GET("users/user/{email}")
     Observable<User> getOtherUserProfile(@Path("email") String email);
 
-    @POST("authenticate")
+    @POST("users/authenticate")
     Observable<Response> login();
 
-    @POST("tokenauth/{email}")
+    @POST("users/tokenauth/{email}")
     Observable<Response> validateToken(@Path("email") String email);
 
     @GET("users/{email}")
@@ -59,6 +60,11 @@ public interface RetrofitInterface {
     @GET("events/{id}")
     Observable<Event> getEvent(@Path("id") String email);
 
+    @POST("events/{eid}/{uid}")
+    Observable<Response> addUserToEvent(@Path("eid") String eid, @Path("uid") String uid);
+
+    @PUT("events/{eid}/{uid}")
+    Observable<Response> deleteUserFromEvent(@Path("eid") String eid, @Path("uid") String uid);
 
 
 }

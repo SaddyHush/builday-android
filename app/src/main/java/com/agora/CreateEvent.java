@@ -70,7 +70,12 @@ public class CreateEvent extends AppCompatActivity {
         mbtnSubmit = (Button) findViewById(R.id.btn_submit);
         mProgressbar = (ProgressBar) findViewById(R.id.progress);
 
-        mbtnSubmit.setOnClickListener(view -> createEvent());
+        mbtnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createEvent();
+            }
+        });
         position = getIntent().getParcelableExtra("position");
         lat = position.latitude;
         lng = position.longitude;
@@ -113,6 +118,7 @@ public class CreateEvent extends AppCompatActivity {
             mProgressbar.setVisibility(View.VISIBLE);
         }else {
             showToastMessage("Enter Valid Details !");
+
         }
     }
 

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements ResetPasswordDial
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
         mSubscriptions = new CompositeSubscription();
         validateToken();
+//        loadFragment();
     }
 
     private void loadFragment(){
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements ResetPasswordDial
             Intent intent = new Intent(this, MapsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        } else {
+            loadFragment();
         }
     }
     private void handleError(Throwable error) {
