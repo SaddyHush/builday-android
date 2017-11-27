@@ -46,9 +46,8 @@ public class EditPersonalInfo extends AppCompatActivity {
     }
 
     private void initView(){
-        enterWorkDetails = (EditText) findViewById(R.id.enterYourWorkPlace);
         enterYourInterests = (EditText) findViewById(R.id.enterYourInterests);
-       // enterInfoAboutYourself = (EditText) findViewById(R.id.tellSomethingAboutYourself);
+        enterInfoAboutYourself = (EditText) findViewById(R.id.describeYourself);
         submitInfoDetails = (Button) findViewById(R.id.bt_infosubmitbutton);
     }
 

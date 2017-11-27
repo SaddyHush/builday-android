@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/BuilDay.iml" filepath="$PROJECT_DIR$/BuilDay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/builday-android.iml" filepath="$PROJECT_DIR$/builday-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/buliday-master.iml" filepath="$PROJECT_DIR$/buliday-master.iml" />
     </modules>
   </component>
 </project>

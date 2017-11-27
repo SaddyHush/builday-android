@@ -2,100 +2,103 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:background="@drawable/addinterest">
 
 
-        <RelativeLayout
-            android:orientation="vertical"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+       <android.support.design.widget.TextInputLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:gravity="start"
+           android:id="@+id/img_logo">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:src="@drawable/logo" />
+       </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ti_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin">
+            android:layout_below="@+id/img_logo"
+            android:layout_marginTop="@dimen/child_margin_top"
+            android:textColorHint="@android:color/white">
 
-            <ImageView
-                android:id="@+id/img_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/logo_height"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/logo"
-                android:contentDescription="@string/app_name"/>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/ti_title"
+            <EditText
+                android:id="@+id/et_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/img_logo"
-                android:layout_marginTop="@dimen/child_margin_top">
+                android:hint="@string/event_title"
+                android:inputType="text"
+                android:textColor="#ffffff"
+                 />
 
-                <EditText
-                    android:id="@+id/et_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_person"
-                    android:drawableEnd="@drawable/ic_person"
-                    android:hint="@string/event_title"
-                    android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ti_interest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ti_title"
+            android:layout_marginTop="@dimen/child_margin_top"
+            android:textColorHint="@android:color/white">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/ti_interest"
+            <EditText
+                android:id="@+id/et_interest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ti_title"
-                android:layout_marginTop="@dimen/child_margin_top">
+                android:hint="@string/interest_in_map"
+                android:inputType="text" />
 
-                <EditText
-                    android:id="@+id/et_interest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/interest_in_map"
-                    android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/ti_maxUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ti_interest"
-            android:layout_marginTop="@dimen/child_margin_top">
+            android:layout_marginTop="@dimen/child_margin_top"
+            android:textColorHint="@android:color/white">
 
-                <EditText
-                    android:id="@+id/et_maxUsers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_email"
-                    android:drawableEnd="@drawable/ic_email"
-                    android:hint="@string/max_num_user"
-                    android:inputType="number" />
-
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
-            <Button
-                android:id="@+id/btn_submit"
+            <EditText
+                android:id="@+id/et_maxUsers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ti_maxUsers"
-                android:layout_marginTop="@dimen/button_margin"
-                android:drawableRight="@drawable/ic_arrow_forward"
-                android:drawableEnd="@drawable/ic_arrow_forward"
-                android:paddingLeft="@dimen/button_padding"
-                android:paddingRight="48dp"
-                android:paddingEnd="48dp"
-                android:paddingStart="@dimen/button_padding"
-                android:text="@string/event_creation_hint" />
+                android:hint="@string/max_num_user"
+                android:inputType="number" />
 
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btn_submit"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/button_margin"
-                android:visibility="gone"/>
 
-        </RelativeLayout>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ti_maxUsers"
+            android:layout_marginTop="@dimen/button_margin"
+            android:drawableEnd="@drawable/ic_arrow_forward"
+            android:drawableRight="@drawable/ic_arrow_forward"
+            android:paddingEnd="48dp"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="48dp"
+            android:paddingStart="@dimen/button_padding"
+            android:text="@string/event_creation_hint" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_submit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </ScrollView>

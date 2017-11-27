@@ -1,54 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.agora.EditPersonalInfo">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical"
-        android:weightSum="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:id="@+id/linearLayout"
-        android:layout_marginRight="0dp"
-        android:layout_marginEnd="0dp"
-        app:layout_constraintHorizontal_bias="0.0">
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_logo"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:src="@drawable/logo" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:layout_below="@+id/ima"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:paddingTop="26dp"
+            android:text="Enter your interests"
+            android:textAlignment="center"
+            android:textColor="@color/greenliketext"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start"
+        >
 
         <EditText
             android:id="@+id/enterYourInterests"
-            android:layout_width="342dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="53dp"
-            android:ems="10"
-            android:hint="@string/interest_in_profile"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/enterYourWorkPlace"
-            android:layout_width="342dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="280dp"
-            android:ems="10"
-            android:hint="@string/add_workplace_to_profile"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/bt_infosubmitbutton"
-            android:layout_width="344dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="26dp"
-            android:onClick="submitInfo"
-            android:text="@string/submit_btn_interest_workplace" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="casual"
+            android:hint="Chess, Piano, Soccer..."
+            android:paddingTop="44dp"
+            android:textColorHint="@color/greenliketext"
+            android:textStyle="italic" />
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:paddingTop="26dp"
+            android:text="Describe yourself"
+            android:textAlignment="center"
+            android:textColor="@color/greenliketext"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="start">
+
+        <EditText
+            android:id="@+id/describeYourself"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="casual"
+            android:hint="Enthusiastic, Vegetarian..."
+            android:paddingTop="44dp"
+            android:textColorHint="@color/greenliketext"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp">
+
+        <Button
+            android:id="@+id/bt_infosubmitbutton"
+            style="@android:style/Widget.DeviceDefault.Button.Inset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+    </LinearLayout>
+
+
+</LinearLayout>

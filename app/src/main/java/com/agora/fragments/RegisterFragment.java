@@ -77,17 +77,13 @@ public class RegisterFragment extends Fragment {
         mEtEmail = (EditText) v.findViewById(R.id.et_email);
         mEtPassword = (EditText) v.findViewById(R.id.et_password);
         mBtRegister = (Button) v.findViewById(R.id.btn_register);
-        mTvLogin = (TextView) v.findViewById(R.id.tv_login);
-        mTiName = (TextInputLayout) v.findViewById(R.id.ti_name);
-        mTiSurname = (TextInputLayout) v.findViewById(R.id.ti_surname);
-        mTiGender = (TextInputLayout) v.findViewById(R.id.ti_gender);
         mTiEmail = (TextInputLayout) v.findViewById(R.id.ti_email);
         mTiPassword = (TextInputLayout) v.findViewById(R.id.ti_password);
         mProgressbar = (ProgressBar) v.findViewById(R.id.progress);
 
         radioGroup = (RadioGroup)v.findViewById(R.id.rgroup);
         mBtRegister.setOnClickListener(view -> register());
-        mTvLogin.setOnClickListener(view -> goToLogin());
+        //mTvLogin.setOnClickListener(view -> goToLogin());
     }
 
     private void register() {
@@ -110,30 +106,30 @@ public class RegisterFragment extends Fragment {
         if (!validateFields(name)) {
 
             err++;
-            mTiName.setError("Name should not be empty!");
+            mEtName.setError("Name should not be empty!");
         }
 
         if (!validateFields(surname)) {
 
             err++;
-            mTiSurname.setError("Surname should not be empty!");
+            mEtSurname.setError("Surname should not be empty!");
         }
 
         if (!validateEmail(email)) {
 
             err++;
-            mTiEmail.setError("Email should be valid!");
+            mEtEmail.setError("Email should be valid!");
         }
 
         if (!validateFields(password)) {
 
             err++;
-            mTiPassword.setError("Password should not be empty!");
+            mEtPassword.setError("Password should not be empty!");
         }
         if (!validateFields(gender)) {
 
             err++;
-            mTiPassword.setError("Gender has to be selected!");
+            mEtPassword.setError("Gender has to be selected!");
         }
 
         if (err == 0) {
@@ -159,10 +155,9 @@ public class RegisterFragment extends Fragment {
 
     private void setError() {
 
-        mTiName.setError(null);
-        mTiEmail.setError(null);
-        mTiPassword.setError(null);
-        mTiGender.setError(null);
+        mEtName.setError(null);
+        mEtEmail.setError(null);
+        mEtPassword.setError(null);
     }
 
     private void registerProcess(User user) {

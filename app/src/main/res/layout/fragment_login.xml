@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/colorPrimary">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_logo"
-                android:layout_marginTop="@dimen/child_margin_top">
+                android:layout_marginTop="@dimen/child_margin_top"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/et_email"
@@ -45,7 +47,8 @@
                 android:layout_below="@+id/ti_email"
                 android:layout_marginTop="@dimen/child_margin_top"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@android:color/white">
+                app:passwordToggleTint="@android:color/white"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/et_password"
@@ -68,7 +71,8 @@
                 android:paddingRight="48dp"
                 android:paddingEnd="48dp"
                 android:paddingStart="@dimen/button_padding"
-                android:text="@string/loginButton" />
+                android:text="@string/loginButton"
+                android:background="@color/colorSecondary"/>
 
             <TextView
                 android:id="@+id/tv_register"
