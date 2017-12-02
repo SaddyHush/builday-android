@@ -10,6 +10,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnMap"
+        android:background="@color/colorSecondary"
         android:layout_width="146dp"
         android:layout_height="66dp"
         android:layout_alignParentBottom="true"

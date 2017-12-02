@@ -6,7 +6,6 @@ import com.agora.model.Status;
 import com.agora.model.User;
 
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -21,10 +20,10 @@ public interface RetrofitInterface {
     @GET("users/user/{email}")
     Observable<User> getOtherUserProfile(@Path("email") String email);
 
-    @POST("users/authenticate")
+    @POST("authenticate")
     Observable<Response> login();
 
-    @POST("users/tokenauth/{email}")
+    @POST("tokenauth/{email}")
     Observable<Response> validateToken(@Path("email") String email);
 
     @GET("users/{email}")

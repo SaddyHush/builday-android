@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/addinterest">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -27,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_logo"
-            android:layout_marginTop="@dimen/child_margin_top"
-            android:textColorHint="@android:color/white">
+            android:layout_marginTop="@dimen/child_margin_top">
 
             <EditText
                 android:id="@+id/et_title"
@@ -46,8 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ti_title"
-            android:layout_marginTop="@dimen/child_margin_top"
-            android:textColorHint="@android:color/white">
+            android:layout_marginTop="@dimen/child_margin_top">
 
             <EditText
                 android:id="@+id/et_interest"
@@ -63,8 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ti_interest"
-            android:layout_marginTop="@dimen/child_margin_top"
-            android:textColorHint="@android:color/white">
+            android:layout_marginTop="@dimen/child_margin_top">
 
             <EditText
                 android:id="@+id/et_maxUsers"
@@ -78,6 +74,7 @@
 
 
         <Button
+            android:background="@color/colorSecondary"
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

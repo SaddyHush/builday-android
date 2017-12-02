@@ -1,138 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_profile"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ProfileActivity">
-
-
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/content"
+    android:layout_height="match_parent">
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear"
+        android:layout_alignParentTop="false">
 
-        <android.support.design.widget.AppBarLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:paddingBottom="24dp"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:weightSum="1"
-            android:background="@color/colorBlueGray">
-
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/main.collapsing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="0.56"
-                    android:clipChildren="false">
-
-                    <ImageView
-                        android:id="@+id/ivUserProfilePhoto"
-                        android:layout_width="@dimen/user_profile_avatar_size"
-                        android:layout_height="@dimen/user_profile_avatar_size"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
-                        android:contentDescription="@string/profile_photo_desc"
-                        android:src="@drawable/ic_person"
-                        />
-
-                    <LinearLayout
-                        android:id="@+id/vUserDetails"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#ffffff"
-                            android:textSize="24sp" />
-
-                        <TextView
-                            android:id="@+id/tv_interest"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="#bbbbbb"
-                            android:textSize="15sp" />
-
-                        <Button
-                            android:id="@+id/btnEditInfo"
-                            android:layout_width="match_parent"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="24dp"
-                            android:layout_marginRight="24dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/btn_following"
-                            android:text="@string/edit_info_btn"
-                            android:textColor="#ffffff"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
+            android:layout_marginBottom="22dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/new_year_snow" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:fillViewport="true"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:gravity="bottom|end"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/tv_status"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/slot_for_status"
-                    android:inputType="textMultiLine" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/confirmStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="statusConfirm"
-                    android:text="@string/status_publish_btn" />
+                </LinearLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:gravity=""
+                    android:src="@drawable/icon_user" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical" />
         </LinearLayout>
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
+            <EditText
+                android:id="@+id/tv_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/slot_for_status"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/confirmStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@color/colorSecondary"
+                android:onClick="statusConfirm"
+                android:text="@string/status_publish_btn" />
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
 
         <include layout="@layout/fab_profile_map" />
-
-
-    </android.support.design.widget.CoordinatorLayout>
-
+    </LinearLayout>
     <include
         android:id="@+id/vUserProfileRoot"
         layout="@layout/toolbar"
         android:layout_width="match_parent" />
-</LinearLayout>
+</RelativeLayout>

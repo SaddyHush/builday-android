@@ -220,12 +220,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void init(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(String.valueOf(R.drawable.ic_event), "drawable", getPackageName()));
         imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 64, 64, false);
-        profileButton = (ImageButton) findViewById(R.id.btnProfile);
+//        profileButton = (ImageButton) findViewById(R.id.btnProfile);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
