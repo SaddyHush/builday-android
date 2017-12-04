@@ -10,29 +10,27 @@ import com.agora.R;
 import com.agora.model.Event;
 import com.agora.model.Status;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 /**
  * Created by Saddy on 7/29/2017.
  */
 
-public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAdapter.StatusHolder> {
-    private ArrayList<Status> mEvents;
-    public StatusRecyclerAdapter(ArrayList<Status> events) {
+public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAdapter.EventHolder> {
+    private ArrayList<Event> mEvents;
+    public StatusRecyclerAdapter(ArrayList<Event> events) {
         mEvents = events;
     }
 
     @Override
-    public StatusRecyclerAdapter.StatusHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public EventHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.status_layout, parent, false);
-        return new StatusHolder(inflatedView);
+        return new EventHolder(inflatedView);
     }
 
     @Override
-    public void onBindViewHolder(StatusRecyclerAdapter.StatusHolder holder, int position) {
-        Status itemPhoto = mEvents.get(position);
+    public void onBindViewHolder(EventHolder holder, int position) {
+        Event itemPhoto = mEvents.get(position);
         holder.bindStatus(itemPhoto);
     }
 
@@ -40,13 +38,13 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
     public int getItemCount() {
         return mEvents.size();
     }
-    public static class StatusHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class EventHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mUserName;
         private TextView mText;
         private TextView mDay;
         private TextView mMonth;
 
-        public StatusHolder(View v) {
+        public EventHolder(View v) {
             super(v);
 
             mDay = (TextView) v.findViewById(R.id.dateDay);

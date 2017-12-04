@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.agora.Animation.GalleryUtil;
 import com.agora.fragments.ChangePasswordDialog;
+import com.agora.model.Event;
 import com.agora.model.Response;
 import com.agora.model.Status;
 import com.agora.model.User;
@@ -86,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private EditText tv_status;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private ArrayList<Status> statuses;
+    private ArrayList<Event> events;
     private static final String[] WRITE_PERMS={
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -158,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private void setStatusInd(int response){
         statusInd = --response;
         statusSize = statusInd;
-        if (statuses.size() == 0 && statusInd != -1) {
+        if (events.size() == 0 && statusInd != -1) {
             requestStatus(statusInd--);
         }
     }
@@ -190,10 +191,10 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
     private void handleStatusResponse(String status, int n) {
         String fullName = user.getName() + " " + user.getSurname();
-        Status s = new Status(fullName, status, n);
-        statuses.add(s);
-        Collections.sort(statuses);
-        mAdapter.notifyItemInserted(statuses.size());
+//        Status s = new Status(fullName, status, n);
+//        events.add(s);
+//        Collections.sort(events);
+        mAdapter.notifyItemInserted(events.size());
     }
 
     private void updateProcess(User user) {
@@ -406,12 +407,12 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         editButton = (Button) findViewById(R.id.btnEditInfo);
         tv_interest = (TextView) findViewById(R.id.tv_interest);
 //        tv_workplace = (TextView) findViewById(R.id.tv_workplace);
-        tv_status = (EditText) findViewById(R.id.tv_status);
+//        tv_status = (EditText) findViewById(R.id.tv_status);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        statuses = new ArrayList<Status>();
-        mAdapter = new StatusRecyclerAdapter(statuses);
+        events = new ArrayList<Event>();
+        mAdapter = new StatusRecyclerAdapter(events);
         mRecyclerView.setAdapter(mAdapter);
 
         profilePhoto.setOnClickListener(new View.OnClickListener() {
