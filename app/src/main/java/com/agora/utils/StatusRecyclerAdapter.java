@@ -10,7 +10,12 @@ import com.agora.R;
 import com.agora.model.Event;
 import com.agora.model.Status;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Saddy on 7/29/2017.
  */
@@ -43,6 +48,7 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
         private TextView mText;
         private TextView mDay;
         private TextView mMonth;
+        private TextView mUsersJoined;
 
         public EventHolder(View v) {
             super(v);
@@ -51,6 +57,7 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
             mMonth = (TextView) v.findViewById(R.id.dateMonth);
             mUserName = (TextView) v.findViewById(R.id.username);
             mText = (TextView) v.findViewById(R.id.text);
+            mUsersJoined = (TextView) v.findViewById(R.id.usersJoined);
             v.setOnClickListener(this);
         }
 
@@ -59,9 +66,12 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
 
         }
         public void bindStatus(Event event) {
-            mDay.setText(event.getEventDateTime());
+            String [] splits = event.getEventDateTime().split(" ");
+            mDay.setText(splits[2]);
+            mMonth.setText(splits[1]);
             mUserName.setText(event.getTitle());
-            mText.setText(event.getTitle());
+            mText.setText("Interest Category: " + event.getInterest());
+            mUsersJoined.setText("Users joined: " + event.getAcceptedUserID().size() + "/" + (int)event.getUsersLimit());
         }
     }
 }

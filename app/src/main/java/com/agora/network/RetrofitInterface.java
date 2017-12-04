@@ -44,11 +44,11 @@ public interface RetrofitInterface {
     @POST("users/{email}/status")
     Observable<Response> createStatus(@Path("email") String email, @Body Status status);
 
-    @GET("users/{email}/status/{num}")
-    Observable<String> getStatus(@Path("email") String email, @Path("num")int num);
+    @GET("users/{email}/event/{num}")
+    Observable<String> getEventIDFromUser(@Path("email") String email, @Path("num")int num);
 
-    @GET("users/{email}/status/size")
-    Observable<Integer > getStatusAmount(@Path("email") String email);
+    @GET("users/{email}/event/amount")
+    Observable<Integer> getEventAmount(@Path("email") String email);
 
     @POST("events/upload/{email}")
     Observable<Response> uploadEvent(@Path("email") String email, @Body Event event);

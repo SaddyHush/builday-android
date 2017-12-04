@@ -35,7 +35,6 @@ import com.agora.Animation.GalleryUtil;
 import com.agora.fragments.ChangePasswordDialog;
 import com.agora.model.Event;
 import com.agora.model.Response;
-import com.agora.model.Status;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.agora.utils.Constants;
@@ -48,7 +47,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
     private static final int WRITE_REQUEST=LOCATION_REQUEST+1;
     private final int RESULT_CROP = 400;
-    private int statusInd;
+    private int eventIndex;
     private int statusSize;
     private Toolbar toolbar;
 
@@ -127,16 +125,17 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         return super.onOptionsItemSelected(item);
     }
 
-    private void getStatusAmount(){
-        mSubscriptions.add(NetworkUtil.getRetrofit().getStatusAmount(mEmail)
+    private void getEventAmount(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getEventAmount(mEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::setStatusInd,this::handleStatusIndError));
+                .subscribe(this::setEventIndex,this::handleStatusIndError));
     }
 
 
+
     private void handleStatusIndError(Throwable error){
-        getStatusAmount();
+        getEventAmount();
     }
 
 
@@ -150,49 +149,36 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 int totalItemCount = mRecyclerView.getLayoutManager().getItemCount();
-                if (totalItemCount == getLastVisibleItemPosition() + 1 && statusInd != -1) {
-                    requestStatus(statusInd--);
+                if (totalItemCount == getLastVisibleItemPosition() + 1 && eventIndex != -1) {
+                    requestEventIDFromUser(eventIndex--);
                 }
             }
         });
     }
-    private void setStatusInd(int response){
-        statusInd = --response;
-        statusSize = statusInd;
-        if (events.size() == 0 && statusInd != -1) {
-            requestStatus(statusInd--);
+    private void setEventIndex(int response){
+        eventIndex = --response;
+        statusSize = eventIndex;
+        if (events.size() == 0 && eventIndex != -1) {
+            requestEventIDFromUser(eventIndex--);
         }
     }
-    public void statusConfirm(View view){
-        String status = tv_status.getText().toString();
+    public void requestEventIDFromUser(int n){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getEventIDFromUser(mEmail, n)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(v -> getEvent(v, n),this::handleError));
+    }
 
-        if(status.equals("")){
-            return;
-        }
-        Status status1 = new Status(null, status, 0);
-        addStatus(status1);
-        tv_status.setText("");
-    }
-    private void addStatus(Status status) {
-        mSubscriptions.add(NetworkUtil.getRetrofit(mToken).createStatus(mEmail, status)
+    private void getEvent(String id, int n){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getEvent(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleStatusConfirm,this::handleError));
+                .subscribe(v -> handleEventResponse(v, n),this::handleError));
     }
-    private void handleStatusConfirm(Response response){
-        requestStatus(++statusSize);
-        showSnackBarMessage(response.getMessage());
-    }
-    public void requestStatus(int n){
-        mSubscriptions.add(NetworkUtil.getRetrofit().getStatus(mEmail, n)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(v -> handleStatusResponse(v, n),this::handleError));
-    }
-    private void handleStatusResponse(String status, int n) {
+    private void handleEventResponse(Event event, int n) {
         String fullName = user.getName() + " " + user.getSurname();
 //        Status s = new Status(fullName, status, n);
-//        events.add(s);
+        events.add(event);
 //        Collections.sort(events);
         mAdapter.notifyItemInserted(events.size());
     }
@@ -293,7 +279,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
 
     private void loadProfile() {
-
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).getProfile(mEmail)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -302,7 +287,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     private void handleResponse(User user) {
         this.user = user;
-        getStatusAmount();
+        getEventAmount();
         name.setText(user.getName() + " " + user.getSurname());
         if(user.getWorkPlace() != null){
             tv_workplace.setText("Working at: " + user.getWorkPlace());
@@ -360,16 +345,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         showSnackBarMessage("Password Changed Successfully!");
 
     }
-    public void startMapActivity(){
-        if (canAccessLocation()) {
-            doLocationThing();
-        }
-        else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
-            }
-        }
-    }
+
     private void doLocationThing(){
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
@@ -407,7 +383,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         editButton = (Button) findViewById(R.id.btnEditInfo);
         tv_interest = (TextView) findViewById(R.id.tv_interest);
 //        tv_workplace = (TextView) findViewById(R.id.tv_workplace);
-//        tv_status = (EditText) findViewById(R.id.tv_status);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -448,6 +423,16 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 //                startMapActivity();
 //            }
 //        });
+//        public void startMapActivity(){
+//            if (canAccessLocation()) {
+//                doLocationThing();
+//            }
+//            else {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
+//                }
+//            }
+//        }
 
     }
 }
