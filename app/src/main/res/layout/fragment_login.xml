@@ -90,7 +90,8 @@
                 android:layout_below="@+id/tv_register"
                 android:layout_marginTop="@dimen/button_margin"
                 android:text="Forgot password?"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:visibility="invisible" />
 
             <ProgressBar
                 android:id="@+id/progress"

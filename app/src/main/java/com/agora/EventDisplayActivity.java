@@ -108,7 +108,7 @@ public class EventDisplayActivity extends AppCompatActivity {
     private void handleResponse(Event event){
         title.setText(event.getTitle());
         interest.setText(event.getInterest());
-        maxNum.setText("Maximum number of people for this event: "+ event.getUsersLimit());
+        maxNum.setText("Maximum number of people for this event: "+ (int)(event.getUsersLimit()));
         thisEvent = event;
         if (thisEvent.getAcceptedUserID() != null && thisEvent.getAcceptedUserID().contains(mEmail)){
             btnConnectEvent.setText("Disconnect from this event");

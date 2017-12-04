@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,14 +26,10 @@
             android:layout_height="78dp"
             android:layout_below="@+id/ima"
             android:layout_gravity="center"
-            android:fontFamily="serif"
             android:gravity="center"
-            android:paddingTop="26dp"
             android:text="Enter your interests"
             android:textAlignment="center"
-            android:textColor="@color/greenliketext"
-            android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textSize="20sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,11 +42,7 @@
             android:id="@+id/enterYourInterests"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="casual"
-            android:hint="Chess, Piano, Soccer..."
-            android:paddingTop="44dp"
-            android:textColorHint="@color/greenliketext"
-            android:textStyle="italic" />
+            android:hint="Chess, Piano, Soccer..." />
 
     </LinearLayout>
 
@@ -59,17 +52,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:paddingTop="22dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="72dp"
             android:layout_gravity="center"
-            android:fontFamily="serif"
             android:gravity="center"
-            android:paddingTop="26dp"
             android:text="Describe yourself"
             android:textAlignment="center"
-            android:textColor="@color/greenliketext"
-            android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textSize="20sp" />
 
     </LinearLayout>
     <LinearLayout
@@ -79,14 +69,11 @@
         android:layout_gravity="start">
 
         <EditText
+            android:paddingTop="22dp"
             android:id="@+id/describeYourself"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="casual"
-            android:hint="Enthusiastic, Vegetarian..."
-            android:paddingTop="44dp"
-            android:textColorHint="@color/greenliketext"
-            android:textStyle="italic" />
+            android:hint="Enthusiastic, Vegetarian..." />
 
     </LinearLayout>
     <LinearLayout
@@ -96,7 +83,6 @@
 
         <Button
             android:id="@+id/bt_infosubmitbutton"
-            style="@android:style/Widget.DeviceDefault.Button.Inset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit" />

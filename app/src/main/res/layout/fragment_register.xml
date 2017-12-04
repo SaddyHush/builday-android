@@ -34,24 +34,6 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.5"
-                        android:gravity="bottom"
-                        android:src="@drawable/facebook_logo_3" />
-
-                    <TextView
-                        android:id="@+id/sin"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Connect with your Facebook Account"
-                        android:textColor="?attr/colorBackgroundFloating"
-                        android:textSize="12dp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -67,27 +49,6 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.5"
-                        android:gravity="bottom"
-                        android:src="@drawable/vklogo"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/sinn"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Connect with your VK account"
-                        android:textColor="?attr/colorBackgroundFloating"
-                        android:textSize="1sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -253,6 +214,7 @@
                 android:layout_weight="1"
                 android:padding="16dp"
                 android:gravity="start"
+                android:textColor="@color/colorPrimaryText"
                 android:hint="Type your email.."
                 android:textSize="12sp" />
         </LinearLayout>
@@ -283,6 +245,7 @@
                 android:id="@+id/et_password"
                 android:layout_gravity="center"
                 android:textAlignment="textStart"
+                android:textColor="@color/colorPrimaryText"
                 android:layout_weight="1"
                 android:inputType="textPassword"
                 android:textSize="12sp"
