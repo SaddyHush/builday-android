@@ -8,15 +8,25 @@ import java.util.ArrayList;
 
 public class Event {
     private String _id;
-    private String ownerEmail;
-    private ArrayList<String>  joinedUsers;
+    private String ownerID;
+    private ArrayList<String> acceptedUserID;
+    private ArrayList<String> appliedUserID;
     private double usersLimit;
     private String created_at;
     private double lat;
     private double lng;
     private String interest;
     private String title;
+    private String eventDateTime;
 
+
+    public ArrayList<String> getAppliedUserID() {
+        return appliedUserID;
+    }
+
+    public void setAppliedUserID(ArrayList<String> appliedUserID) {
+        this.appliedUserID = appliedUserID;
+    }
     public String getTitle() {
         return title;
     }
@@ -33,20 +43,20 @@ public class Event {
         this._id = _id;
     }
 
-    public String getOwnerEmail() {
-        return ownerEmail;
+    public String getOwnerID() {
+        return ownerID;
     }
 
-    public void setOwnerEmail(String ownerEmail) {
-        this.ownerEmail = ownerEmail;
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 
-    public ArrayList<String> getJoinedUsers() {
-        return joinedUsers;
+    public ArrayList<String> getAcceptedUserID() {
+        return acceptedUserID;
     }
 
-    public void setJoinedUsers(ArrayList<String> joinedUsers) {
-        this.joinedUsers = joinedUsers;
+    public void setAcceptedUserID(ArrayList<String> acceptedUserID) {
+        this.acceptedUserID = acceptedUserID;
     }
 
     public double getUsersLimit() {
@@ -87,5 +97,13 @@ public class Event {
 
     public void setInterest(String interest) {
         this.interest = interest;
+    }
+
+    public String getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(String eventDateTime) {
+        this.eventDateTime = eventDateTime;
     }
 }

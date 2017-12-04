@@ -12,9 +12,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +41,7 @@ import com.agora.utils.Constants;
 import com.agora.utils.StatusRecyclerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -60,6 +63,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private final int GALLERY_ACTIVITY_CODE=200;
     private static final int INITIAL_REQUEST=1337;
     private static final int LOCATION_REQUEST=INITIAL_REQUEST+1;
+    private static final int WRITE_REQUEST=LOCATION_REQUEST+1;
     private final int RESULT_CROP = 400;
     private int statusInd;
     private int statusSize;
@@ -83,6 +87,9 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private ArrayList<Status> statuses;
+    private static final String[] WRITE_PERMS={
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     private static final String[] LOCATION_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
     };
@@ -190,14 +197,11 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     }
 
     private void updateProcess(User user) {
-
         mSubscriptions.add(NetworkUtil.getRetrofit(mToken).setUserChanges(mEmail, user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse,this::handleError));
     }
-
-
 
     private void handleResponse(Response response) {
         showSnackBarMessage(response.getMessage());
@@ -224,14 +228,15 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 }
             }
 
-            if (requestCode == RESULT_CROP) {
+            if (requestCode == UCrop.REQUEST_CROP) {
                 if (resultCode == Activity.RESULT_OK) {
-                    Bundle extras = data.getExtras();
-                    selectedBitmap = extras.getParcelable("data");
+                    final Uri resultUri = UCrop.getOutput(data);
+                    selectedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),resultUri);
                     register();
 
                     profilePhoto.setImageBitmap(selectedBitmap);
-                    profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+                }else if (resultCode == UCrop.RESULT_ERROR) {
+                    System.out.println(UCrop.getError(data));
                 }
             }
         }
@@ -243,19 +248,12 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     private void performCrop(String picUri) {
         try {
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
             File f = new File(picUri);
-            Uri contentUri = Uri.fromFile(f);
-
-            cropIntent.setDataAndType(contentUri, "image/*");
-            cropIntent.putExtra("crop", "true");
-            cropIntent.putExtra("aspectX", 1);
-            cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("outputX", 280);
-            cropIntent.putExtra("outputY", 280);
-
-            cropIntent.putExtra("return-data", true);
-            startActivityForResult(cropIntent, RESULT_CROP);
+            Uri contentUri = FileProvider.getUriForFile( getBaseContext(), getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
+            UCrop.of(contentUri, Uri.fromFile(new File(getApplicationContext().getCacheDir() + "profileTemp.jpg")))
+                    .withAspectRatio(1, 1)
+                    .withMaxResultSize(280, 280)
+                    .start(this);
         }
         catch (ActivityNotFoundException anfe) {
             String errorMessage = "your device doesn't support the crop action!";
@@ -316,7 +314,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
             byte[] decodedString = Base64.decode(user.getMainPhoto(), Base64.DEFAULT);
             Bitmap photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             profilePhoto.setImageBitmap(photo);
-            profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+//            profilePhoto.setScaleType(ImageView.ScaleType.FIT_XY);
 
         }
     }
@@ -378,8 +376,16 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (canAccessLocation()) {
-            doLocationThing();
+        if (requestCode==LOCATION_REQUEST) {
+            if (canAccessLocation()) {
+                doLocationThing();
+            }
+        } else if (requestCode==WRITE_REQUEST){
+            if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Intent gallery_Intent = new Intent(getApplicationContext(), GalleryUtil.class);
+                startActivityForResult(gallery_Intent, GALLERY_ACTIVITY_CODE);
+            }
+
         }
     }
 
@@ -397,7 +403,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         profilePhoto = (ImageView) findViewById(R.id.ivUserProfilePhoto);
         name = (TextView) findViewById(R.id.tv_name);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.btnMap);
-       // editButton = (Button) findViewById(R.id.btnEditInfo);
+        editButton = (Button) findViewById(R.id.btnEditInfo);
         tv_interest = (TextView) findViewById(R.id.tv_interest);
 //        tv_workplace = (TextView) findViewById(R.id.tv_workplace);
         tv_status = (EditText) findViewById(R.id.tv_status);
@@ -411,8 +417,16 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    Intent gallery_Intent = new Intent(getApplicationContext(), GalleryUtil.class);
-                    startActivityForResult(gallery_Intent, GALLERY_ACTIVITY_CODE);
+                    if (!hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(WRITE_PERMS, WRITE_REQUEST);
+                        }
+                    }
+                    else {
+                        Intent gallery_Intent = new Intent(getApplicationContext(), GalleryUtil.class);
+                        startActivityForResult(gallery_Intent, GALLERY_ACTIVITY_CODE);
+                    }
+
                 }
                 catch (Exception ex){
                     Toast.makeText(getApplication().getApplicationContext(), ""+ex.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -427,12 +441,12 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
             }
         });
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startMapActivity();
-            }
-        });
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startMapActivity();
+//            }
+//        });
 
     }
 }

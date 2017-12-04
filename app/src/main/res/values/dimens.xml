@@ -11,7 +11,7 @@
     <dimen name="btn_fab_margins">16dp</dimen>
     <dimen name="default_elevation">8dp</dimen>
     <dimen name="comment_avatar_size">56dp</dimen>
-    <dimen name="user_profile_avatar_size">88dp</dimen>
+    <dimen name="user_profile_avatar_size">90dp</dimen>
     <dimen name="map_height">120dp</dimen>
     <dimen name="paralax_offset">125dp</dimen>
     <dimen name="divider_height">1dp</dimen>

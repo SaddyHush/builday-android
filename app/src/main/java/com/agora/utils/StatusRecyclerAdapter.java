@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.agora.R;
+import com.agora.model.Event;
 import com.agora.model.Status;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 /**
@@ -15,9 +18,9 @@ import java.util.ArrayList;
  */
 
 public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAdapter.StatusHolder> {
-    private ArrayList<Status> mStatuses;
-    public StatusRecyclerAdapter(ArrayList<Status> statuses) {
-        mStatuses = statuses;
+    private ArrayList<Status> mEvents;
+    public StatusRecyclerAdapter(ArrayList<Status> events) {
+        mEvents = events;
     }
 
     @Override
@@ -29,21 +32,25 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
 
     @Override
     public void onBindViewHolder(StatusRecyclerAdapter.StatusHolder holder, int position) {
-        Status itemPhoto = mStatuses.get(position);
+        Status itemPhoto = mEvents.get(position);
         holder.bindStatus(itemPhoto);
     }
 
     @Override
     public int getItemCount() {
-        return mStatuses.size();
+        return mEvents.size();
     }
     public static class StatusHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mUserName;
         private TextView mText;
+        private TextView mDay;
+        private TextView mMonth;
 
         public StatusHolder(View v) {
             super(v);
 
+            mDay = (TextView) v.findViewById(R.id.dateDay);
+            mMonth = (TextView) v.findViewById(R.id.dateMonth);
             mUserName = (TextView) v.findViewById(R.id.username);
             mText = (TextView) v.findViewById(R.id.text);
             v.setOnClickListener(this);
@@ -53,9 +60,10 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
         public void onClick(View view) {
 
         }
-        public void bindStatus(Status status) {
-            mUserName.setText(status.getName());
-            mText.setText(status.getText());
+        public void bindStatus(Event event) {
+            mDay.setText(event.getEventDateTime());
+            mUserName.setText(event.getTitle());
+            mText.setText(event.getTitle());
         }
     }
 }

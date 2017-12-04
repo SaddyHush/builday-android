@@ -101,8 +101,8 @@ public class EventDisplayActivity extends AppCompatActivity {
     }
 
     private void handleAddUser(Response response) {
-        btnConnectEvent.setText("Disconnect from this event");
-        connected = true;
+        btnConnectEvent.setEnabled(false);
+        btnConnectEvent.setText("Your request sent");
     }
 
     private void handleResponse(Event event){
@@ -110,10 +110,13 @@ public class EventDisplayActivity extends AppCompatActivity {
         interest.setText(event.getInterest());
         maxNum.setText("Maximum number of people for this event: "+ event.getUsersLimit());
         thisEvent = event;
-        if (thisEvent.getJoinedUsers() != null && thisEvent.getJoinedUsers().contains(mEmail)){
+        if (thisEvent.getAcceptedUserID() != null && thisEvent.getAcceptedUserID().contains(mEmail)){
             btnConnectEvent.setText("Disconnect from this event");
             connected = true;
-        }else {
+        } else if(thisEvent.getAppliedUserID() != null && thisEvent.getAppliedUserID().contains(mEmail)){
+            btnConnectEvent.setEnabled(false);
+            btnConnectEvent.setText("Your request sent");
+        } else {
             connected = false;
         }
 

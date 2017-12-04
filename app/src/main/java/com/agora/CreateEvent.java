@@ -1,17 +1,23 @@
 package com.agora;
 
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.agora.fragments.DatePickerFragment;
+import com.agora.fragments.TimePickerFragment;
 import com.agora.model.Event;
 import com.agora.model.Response;
 import com.agora.network.NetworkUtil;
@@ -29,7 +35,7 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.agora.utils.Validation.validateFields;
 
-public class CreateEvent extends AppCompatActivity {
+public class CreateEvent extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     private EditText mEtTitle;
     private EditText mEtInterest;
     private EditText mEtMaxUsers;
@@ -45,6 +51,9 @@ public class CreateEvent extends AppCompatActivity {
     private double lng;
     private String mToken;
     private String mEmail;
+    private String date;
+    private String time;
+    private String dateTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +88,9 @@ public class CreateEvent extends AppCompatActivity {
         position = getIntent().getParcelableExtra("position");
         lat = position.latitude;
         lng = position.longitude;
+
+        date = "";
+        time = "";
     }
 
     private void createEvent(){
@@ -88,31 +100,38 @@ public class CreateEvent extends AppCompatActivity {
 
         int err = 0;
         if (!validateFields(title)) {
-
             err++;
             mTiTitle.setError("Title should not be empty!");
         }
 
         if (!validateFields(interest)) {
-
             err++;
             mTiInterest.setError("Interest should not be empty!");
         }
 
         if (!validateFields(maxUsers.toString()) || maxUsers < 1) {
-
             err++;
             mTiMaxUsers.setError("Limit should not be empty or less than 1!");
         }
 
+        if (!validateFields(date)) {
+            err++;
+        }
+
+        if (!validateFields(time)) {
+            err++;
+        }
+
         if (err == 0) {
+            dateTime = date + " " + time;
             Event event = new Event();
             event.setTitle(mEtTitle.getText().toString());
             event.setInterest(mEtInterest.getText().toString());
             event.setUsersLimit(Double.parseDouble(mEtMaxUsers.getText().toString()));
             event.setLat(lat);
             event.setLng(lng);
-            event.setOwnerEmail(mEmail);
+            event.setOwnerID(mEmail);
+            event.setEventDateTime(dateTime);
             eventCreationProcess(event);
 
             mProgressbar.setVisibility(View.VISIBLE);
@@ -159,5 +178,25 @@ public class CreateEvent extends AppCompatActivity {
             showToastMessage("Network Error !");
             e.printStackTrace();
         }
+    }
+    public void showDatePickerDialog(View v){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+    public void showTimePickerDialog(View v){
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        date = "";
+        date += i2 + "/" + i1 + "/" + i;
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+        time = "";
+        time += i + ":" + i1;
     }
 }

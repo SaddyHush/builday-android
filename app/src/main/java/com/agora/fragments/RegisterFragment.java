@@ -142,7 +142,7 @@ public class RegisterFragment extends Fragment {
             user.setGender(gender);
 
 
-            mProgressbar.setVisibility(View.VISIBLE);
+//            mProgressbar.setVisibility(View.VISIBLE);
             registerProcess(user);
 
         } else {
@@ -176,7 +176,7 @@ public class RegisterFragment extends Fragment {
 
     private void handleError(Throwable error) {
 
-        mProgressbar.setVisibility(View.GONE);
+//        mProgressbar.setVisibility(View.GONE);
 
         if (error instanceof HttpException) {
 

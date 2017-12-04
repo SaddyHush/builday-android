@@ -2,6 +2,7 @@ package com.agora;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,8 +11,8 @@ import android.graphics.Canvas;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,7 +52,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends Activity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -71,60 +72,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Toolbar toolbar;
     private HashMap<Marker, String> map;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        while(!canAccessLocation()){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
-            }
+        mSubscriptions = new CompositeSubscription();
+        if (!canAccessLocation())
+            checkLocationPermission();
+        else {
+            map = new HashMap<Marker, String>();
+            init();
+
+            MapFragment mapFragment = (MapFragment) getFragmentManager()
+                    .findFragmentById(R.id.map);
+
+            mapFragment.getMapAsync(this);
+            first = true;
+            initEventsOnTheMap();
+
         }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
         map = new HashMap<Marker, String>();
         init();
-        mSubscriptions = new CompositeSubscription();
+
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
 
         mapFragment.getMapAsync(this);
         first = true;
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         initEventsOnTheMap();
 
     }
 
-    private void initEventsOnTheMap(){
-        mSubscriptions.add(NetworkUtil.getRetrofit().getEvents()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    private void handleError(Throwable e) {
-
-        if (e instanceof HttpException) {
-
-            Gson gson = new GsonBuilder().create();
-
-            try {
-
-                String errorBody = ((HttpException) e).response().errorBody().string();
-                Response response = gson.fromJson(errorBody,Response.class);
-                Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
-            } catch (IOException error) {
-                error.printStackTrace();
-            }
-        } else {
-
-            Toast.makeText(this, "Network Error !", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
 
     private void handleResponse(Event[] events) {
         mMap.clear();
@@ -134,7 +121,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
     private void showEventsOnMap(Event event){
-        getUserByEmail(event.getOwnerEmail(), event);
+        getUserByEmail(event.getOwnerID(), event);
     }
 
     private void getUserByEmail(String email, Event event){
@@ -208,7 +195,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
     }
     private void checkLocationPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !canAccessLocation()) {
             requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
         }
     }
@@ -220,12 +207,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void init(){
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        getSupportActionBar().setTitle(null);
+
         imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(String.valueOf(R.drawable.ic_event), "drawable", getPackageName()));
         imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 64, 64, false);
-//        profileButton = (ImageButton) findViewById(R.id.btnProfile);
+        profileButton = (ImageButton) findViewById(R.id.btnProfile);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
@@ -295,5 +282,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return bitmap;
     }
 
+    private void initEventsOnTheMap(){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getEvents()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError));
+    }
+
+    private void handleError(Throwable e) {
+
+        if (e instanceof HttpException) {
+
+            Gson gson = new GsonBuilder().create();
+
+            try {
+
+                String errorBody = ((HttpException) e).response().errorBody().string();
+                Response response = gson.fromJson(errorBody,Response.class);
+                Toast.makeText(this, response.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (IOException error) {
+                error.printStackTrace();
+            }
+        } else {
+
+            Toast.makeText(this, "Network Error !", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 
 }
