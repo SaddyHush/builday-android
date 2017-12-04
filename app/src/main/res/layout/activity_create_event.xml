@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/max_num_user"
+                android:text="2"
                 android:inputType="number" />
 
 
