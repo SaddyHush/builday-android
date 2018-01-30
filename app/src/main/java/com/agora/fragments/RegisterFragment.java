@@ -50,7 +50,7 @@ public class RegisterFragment extends Fragment {
     private TextInputLayout mTiEmail;
     private TextInputLayout mTiPassword;
     private TextInputLayout mTiGender;
-    private ProgressBar mProgressbar;
+//    private ProgressBar mProgressbar;
 
 
     private CompositeSubscription mSubscriptions;
@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment {
         mBtRegister = (Button) v.findViewById(R.id.btn_register);
         mTiEmail = (TextInputLayout) v.findViewById(R.id.ti_email);
         mTiPassword = (TextInputLayout) v.findViewById(R.id.ti_password);
-        mProgressbar = (ProgressBar) v.findViewById(R.id.progress);
+//        mProgressbar = (ProgressBar) v.findViewById(R.id.progress);
 
         radioGroup = (RadioGroup)v.findViewById(R.id.rgroup);
         mBtRegister.setOnClickListener(view -> register());
@@ -170,8 +170,9 @@ public class RegisterFragment extends Fragment {
 
     private void handleResponse(Response response) {
 
-        mProgressbar.setVisibility(View.GONE);
+//        mProgressbar.setVisibility(View.GONE);
         showSnackBarMessage(response.getMessage());
+        this.goToLogin();
     }
 
     private void handleError(Throwable error) {
@@ -192,7 +193,7 @@ public class RegisterFragment extends Fragment {
                 e.printStackTrace();
             }
         } else {
-
+            error.printStackTrace();
             showSnackBarMessage("Network Error !");
         }
     }
