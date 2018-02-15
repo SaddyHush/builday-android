@@ -4,6 +4,7 @@ package com.agora;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,19 +12,21 @@ import android.graphics.Canvas;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.widget.Toolbar;
 
 import com.agora.model.Event;
 import com.agora.model.Response;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
+import com.agora.utils.Constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -54,6 +57,9 @@ import rx.subscriptions.CompositeSubscription;
 
 public class MapsActivity extends Activity implements OnMapReadyCallback {
     private GoogleMap mMap;
+    private String mToken;
+    private String mEmail;
+    private SharedPreferences mSharedPreferences;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -68,6 +74,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
     Bitmap imageBitmap;
     private ImageButton profileButton;
     private Marker userClick;
+    private ImageButton logout;
     private FloatingActionButton fab;
 
     private Toolbar toolbar;
@@ -78,6 +85,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         mSubscriptions = new CompositeSubscription();
+        initSharedPreferences();
         if (!canAccessLocation())
             checkLocationPermission();
         else {
@@ -218,6 +226,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(String.valueOf(R.drawable.ic_event), "drawable", getPackageName()));
         imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 64, 64, false);
         profileButton = (ImageButton) findViewById(R.id.btnProfile);
+        logout = (ImageButton) findViewById(R.id.logoutbutton);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
@@ -245,6 +254,12 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
                     intent.putExtra("position", userClick.getPosition());
                     startActivity(intent);
                 }
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
             }
         });
         profileButton.setOnClickListener(new View.OnClickListener() {
@@ -313,6 +328,22 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
             Toast.makeText(this, "Network Error !", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+    private void initSharedPreferences() {
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mToken = mSharedPreferences.getString(Constants.TOKEN,"");
+        mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
+
+    }
+
+
+    private void logout() {
+
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.EMAIL,"");
+        editor.putString(Constants.TOKEN,"");
+        editor.apply();
+        finish();
     }
 
 }
