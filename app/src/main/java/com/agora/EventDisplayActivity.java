@@ -1,9 +1,12 @@
 package com.agora;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.agora.model.Event;
 import com.agora.model.Response;
+import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.agora.utils.Constants;
 import com.google.gson.Gson;
@@ -27,10 +31,10 @@ import rx.subscriptions.CompositeSubscription;
 public class EventDisplayActivity extends AppCompatActivity {
     private CompositeSubscription mSubscriptions;
 
+    private User owner;
     private String eventID;
     private ImageView profilePhoto;
     private TextView name;
-    private TextView work;
     private TextView interests;
     private TextView title;
     private TextView interest;
@@ -52,7 +56,6 @@ public class EventDisplayActivity extends AppCompatActivity {
         profilePhoto = (ImageView) findViewById(R.id.ivUserProfilePhoto);
         name = (TextView) findViewById(R.id.tv_name);
         interests = (TextView) findViewById(R.id.tv_interest);
-        work = (TextView) findViewById(R.id.tv_workplace);
         title = (TextView) findViewById(R.id.title);
         interest = (TextView) findViewById(R.id.interest);
         maxNum = (TextView) findViewById(R.id.maxNum);
@@ -78,7 +81,7 @@ public class EventDisplayActivity extends AppCompatActivity {
         mSubscriptions.add(NetworkUtil.getRetrofit().getEvent(eventID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
+                .subscribe(this::getEventCallback,this::handleError));
     }
 
     private void addUserToEvent(String eventID, String userID){
@@ -94,6 +97,23 @@ public class EventDisplayActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleDeleteUserFromEvent,this::handleError));
     }
+    private void getOwnerByEmail(String email){
+        mSubscriptions.add(NetworkUtil.getRetrofit().getOtherUserProfile(email)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::getOwnerCallback,this::handleError));
+    }
+
+    private void getOwnerCallback(User owner){
+        this.owner = owner;
+        name.setText("Creator:     " + owner.getName() + " " + owner.getSurname());
+        if (owner.getMainPhoto() != null){
+            byte[] decodedString = Base64.decode(owner.getMainPhoto(), Base64.DEFAULT);
+            Bitmap photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            profilePhoto.setImageBitmap(photo);
+
+        }
+    }
 
     private void handleDeleteUserFromEvent(Response response) {
         btnConnectEvent.setText("Join this event");
@@ -105,13 +125,13 @@ public class EventDisplayActivity extends AppCompatActivity {
         btnConnectEvent.setText("Your request sent");
     }
 
-    private void handleResponse(Event event){
-        title.setText(event.getTitle());
-        interest.setText(event.getInterest());
+    private void getEventCallback(Event event){
+        title.setText("Title of event: " + event.getTitle());
+        interest.setText("Interest: " + event.getInterest());
         maxNum.setText("Maximum number of people for this event: "+ (int)(event.getUsersLimit()));
         thisEvent = event;
         if (thisEvent.getAcceptedUserID() != null && thisEvent.getAcceptedUserID().contains(mEmail)){
-            btnConnectEvent.setText("Disconnect from this event");
+            btnConnectEvent.setText("Disconnect");
             connected = true;
         } else if(thisEvent.getAppliedUserID() != null && thisEvent.getAppliedUserID().contains(mEmail)){
             btnConnectEvent.setEnabled(false);
@@ -119,8 +139,10 @@ public class EventDisplayActivity extends AppCompatActivity {
         } else {
             connected = false;
         }
+        getOwnerByEmail(event.getOwnerID());
 
     }
+
     private void handleError(Throwable e) {
 
         if (e instanceof HttpException) {

@@ -79,20 +79,6 @@ public class User {
 
     private String mainPhoto;
 
-
-
-    //Added by Seymur Ayvazov 16.06.2017
-    //Additional data for User
-//    private ArrayList<String> interests;
-//
-//    public ArrayList<String> getInterests() {
-//        return interests;
-//    }
-//
-//    public void setInterests(ArrayList<String> interests) {
-//        this.interests = interests;
-//    }
-
     public String getSurname() {
         return surname;
     }
@@ -140,8 +126,6 @@ public class User {
     public String getName() {
         return name;
     }
-
-
 
     public String getEmail() {
         return email;
