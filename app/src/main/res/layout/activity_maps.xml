@@ -16,19 +16,38 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-        <!--android:theme="@style/MapToolBarStyle"-->
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/btnProfile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_account"
-            android:layout_gravity="left"
             android:background="@color/colorPrimary"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:layout_weight="0.3"/>
+
+
+
+        <ImageButton
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_notification_none"
+            android:background="@color/colorPrimary"
+            android:clickable="true"
+            android:focusable="true"
+            android:foregroundGravity="right"
+            android:layout_gravity="right"
+            android:layout_weight="0.3"/>
 
         <ImageButton
             android:id="@+id/logoutbutton"
@@ -37,7 +56,9 @@
             android:src="@drawable/ic_exit"
             android:background="@color/colorPrimary"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            android:layout_weight="0.3"/>
+    </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.CoordinatorLayout
