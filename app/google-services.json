@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "605525935758",
+    "firebase_url": "https://single-bindery-175816.firebaseio.com",
+    "project_id": "single-bindery-175816",
+    "storage_bucket": "single-bindery-175816.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605525935758:android:2f23cb8f9a930979",
+        "android_client_info": {
+          "package_name": "com.agora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605525935758-jlrbs466fr6jdmih7aqhkkhmn1i4i9cv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agora",
+            "certificate_hash": "49ff9e1b14a6878858e76ec177e2ec84e6d6957c"
+          }
+        },
+        {
+          "client_id": "605525935758-t7hk22i4hf0fbj1ldu9qkgjq6uhlqpkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_eYwXYr5tkL1iomzqY1E5E9_Wy1EESSE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605525935758-t7hk22i4hf0fbj1ldu9qkgjq6uhlqpkq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

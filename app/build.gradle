@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-messaging:11.6.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -53,3 +54,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //    compile files('C:/Users/Saddy/Desktop/BuilDay/.idea/libraries/CircleImageView-master/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
 }
+
+
+apply plugin: 'com.google.gms.google-services'

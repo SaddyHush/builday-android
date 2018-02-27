@@ -65,5 +65,6 @@ public interface RetrofitInterface {
     @PUT("events/{eid}/{uid}")
     Observable<Response> deleteUserFromEvent(@Path("eid") String eid, @Path("uid") String uid);
 
-
+    @PUT("notifications/token/update")
+    Observable<Response> updateFCMToken(@Body String email, @Body String fcmToken);
 }
