@@ -16,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agora.model.Event;
+import com.agora.model.FCMToken;
 import com.agora.model.Response;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
@@ -59,6 +61,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private String mToken;
     private String mEmail;
+    private String mFCMToken;
     private SharedPreferences mSharedPreferences;
     private LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -98,9 +101,27 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
             mapFragment.getMapAsync(this);
             first = true;
             initEventsOnTheMap();
-
         }
+        updateTokenInServer(mEmail, mFCMToken);
+    }
 
+
+    private void updateTokenInServer(String mEmail, String fcmToken){
+        FCMToken token = new FCMToken();
+        token.setEmail(mEmail);
+        token.setFcmToken(fcmToken);
+        mSubscriptions.add(NetworkUtil.getRetrofit().updateFCMToken(token)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleTokenUpdate,this::handleTokenUpdateError));
+    }
+
+    public void handleTokenUpdate(Response response){
+        Log.d("Token Refresh Success", response.getMessage());
+    }
+
+    public void handleTokenUpdateError(Throwable error){
+        Log.d("Token Refresh Error", error.getMessage());
     }
 
     @Override
@@ -333,6 +354,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mToken = mSharedPreferences.getString(Constants.TOKEN,"");
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
+        mFCMToken = mSharedPreferences.getString(Constants.FCMTOKEN, "");
 
     }
 

@@ -29,24 +29,10 @@ public class FirebaseInstance extends FirebaseInstanceIdService {
         mSubscriptions = new CompositeSubscription();
         initSharedPreferences();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        if (mEmail != null && mToken != null)
-            updateTokenInServer(mEmail, refreshedToken);
-
-    }
-
-    private void updateTokenInServer(String mEmail, String fcmToken){
-        mSubscriptions.add(NetworkUtil.getRetrofit().updateFCMToken(mEmail, fcmToken)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse,this::handleError));
-    }
-
-    public void handleResponse(Response response){
-        Log.d("Token Refresh Success", response.getMessage());
-    }
-
-    public void handleError(Throwable error){
-        Log.d("Token Refresh Error", error.getMessage());
+        Log.d("Token", refreshedToken);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(Constants.FCMTOKEN, refreshedToken);
+        editor.apply();
     }
 
     private void initSharedPreferences() {

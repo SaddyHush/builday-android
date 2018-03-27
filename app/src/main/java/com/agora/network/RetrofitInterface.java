@@ -1,6 +1,7 @@
 package com.agora.network;
 
 import com.agora.model.Event;
+import com.agora.model.FCMToken;
 import com.agora.model.Response;
 import com.agora.model.Status;
 import com.agora.model.User;
@@ -66,5 +67,5 @@ public interface RetrofitInterface {
     Observable<Response> deleteUserFromEvent(@Path("eid") String eid, @Path("uid") String uid);
 
     @PUT("notifications/token/update")
-    Observable<Response> updateFCMToken(@Body String email, @Body String fcmToken);
+    Observable<Response> updateFCMToken(@Body FCMToken token);
 }
