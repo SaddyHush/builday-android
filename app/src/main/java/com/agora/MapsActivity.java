@@ -374,6 +374,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         editor.putString(Constants.TOKEN,"");
         editor.apply();
         finish();
+        startActivity(new Intent(MapsActivity.this, MainActivity.class));
     }
 
 }
