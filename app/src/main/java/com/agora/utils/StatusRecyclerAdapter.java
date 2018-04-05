@@ -10,6 +10,7 @@ import com.agora.R;
 import com.agora.model.Event;
 import com.agora.model.Status;
 
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,9 +67,10 @@ public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAd
 
         }
         public void bindStatus(Event event) {
-            String [] splits = event.getEventDateTime().split(" ");
-            mDay.setText(splits[2]);
-            mMonth.setText(splits[1]);
+            String [] splits = event.getEventDateTime().split("-");
+            mDay.setText(splits[2].substring(0,2));
+            String month = new DateFormatSymbols().getMonths()[Integer.parseInt(splits[1])-1].substring(0,3).toUpperCase();
+            mMonth.setText(month);
             mUserName.setText(event.getTitle());
             mText.setText("Interest Category: " + event.getInterest());
             mUsersJoined.setText("Users joined: " + event.getAcceptedUserID().size() + "/" + (int)event.getUsersLimit());
