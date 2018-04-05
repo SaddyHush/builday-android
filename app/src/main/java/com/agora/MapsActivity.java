@@ -29,6 +29,7 @@ import com.agora.model.Response;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.agora.utils.Constants;
+import com.agora.utils.Notification;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -79,6 +80,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
     private Marker userClick;
     private ImageButton logout;
     private FloatingActionButton fab;
+    private ImageButton notification;
 
     private Toolbar toolbar;
     private HashMap<Marker, String> map;
@@ -104,7 +106,6 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         }
         updateTokenInServer(mEmail, mFCMToken);
     }
-
 
     private void updateTokenInServer(String mEmail, String fcmToken){
         FCMToken token = new FCMToken();
@@ -248,6 +249,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
         imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 64, 64, false);
         profileButton = (ImageButton) findViewById(R.id.btnProfile);
         logout = (ImageButton) findViewById(R.id.logoutbutton);
+        notification = (ImageButton) findViewById(R.id.notifications);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         fab = (FloatingActionButton) findViewById(R.id.btnOk);
         mLocationRequest = createLocationRequest();
@@ -275,6 +277,12 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
                     intent.putExtra("position", userClick.getPosition());
                     startActivity(intent);
                 }
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, Notification.class));
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

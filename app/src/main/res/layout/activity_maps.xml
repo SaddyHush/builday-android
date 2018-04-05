@@ -47,7 +47,7 @@
             android:focusable="true"
             android:foregroundGravity="right"
             android:layout_gravity="right"
-            android:layout_weight="0.3"/>
+            android:layout_weight="0.3" />
 
         <ImageButton
             android:id="@+id/logoutbutton"
@@ -75,6 +75,8 @@
             android:name="com.google.android.gms.maps.MapFragment" />
 
         <include layout="@layout/fab_map_ok" />
+
+
 
     </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

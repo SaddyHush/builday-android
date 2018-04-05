@@ -77,10 +77,14 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
+            android:name=".utils.Notification"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".CreateEvent"
             android:theme="@style/AppTheme" />
-        <activity android:name=".EventDisplayActivity"
-            android:theme="@style/AppTheme.LoginRegister"></activity>
+        <activity
+            android:name=".EventDisplayActivity"
+            android:theme="@style/AppTheme.LoginRegister" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"

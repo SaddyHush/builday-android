@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\Saddy\Desktop\builday-android\BuilDay.iml" filepath="C:\Users\Saddy\Desktop\builday-android\BuilDay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/builday-android.iml" filepath="$PROJECT_DIR$/builday-android.iml" />
-      <module fileurl="file://C:\Users\Saddy\Desktop\BuilDay\builday-android.iml" filepath="C:\Users\Saddy\Desktop\BuilDay\builday-android.iml" />
     </modules>
   </component>
 </project>
