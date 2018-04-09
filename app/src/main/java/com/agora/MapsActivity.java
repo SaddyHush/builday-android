@@ -149,7 +149,8 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
 
 
     private void handleResponse(Event[] events) {
-        mMap.clear();
+        if (map!= null)
+            mMap.clear();
         this.events = new ArrayList<>(Arrays.asList(events));
         for (Event e: this.events){
             showEventsOnMap(e);

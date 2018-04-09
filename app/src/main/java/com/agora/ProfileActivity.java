@@ -194,13 +194,20 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         showSnackBarMessage(response.getMessage());
     }
 
-    private void register(){
+    private void prepareImage(){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         selectedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        if (stream.size() / 1024 / 1024 > 14){
+            String errorMessage = "The image is too large";
+            Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
         byte[] byteArray = stream.toByteArray();
         String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
         user.setMainPhoto(encodedImage);
         updateProcess(user);
+        profilePhoto.setImageBitmap(selectedBitmap);
     }
 
     @Override
@@ -219,9 +226,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
                 if (resultCode == Activity.RESULT_OK) {
                     final Uri resultUri = UCrop.getOutput(data);
                     selectedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),resultUri);
-                    register();
-
-                    profilePhoto.setImageBitmap(selectedBitmap);
+                    prepareImage();
                 }else if (resultCode == UCrop.RESULT_ERROR) {
                     System.out.println(UCrop.getError(data));
                 }
