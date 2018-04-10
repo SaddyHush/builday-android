@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Info about event"
+            android:text="@string/info_about_event"
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"/>
@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Creator"
+                android:text="@string/creator_name"
                 android:textSize="24sp"/>
 
             <TextView
@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Places available"
+                android:text="@string/places_available"
                 android:textSize="24sp"/>
             <TextView
                 android:id="@+id/maxNum"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="24sp"
-                android:text="Interest"
+                android:text="@string/interest"
                 />
             <TextView
                 android:id="@+id/interest"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="24sp"
-                android:text="Title"
+                android:text="@string/title"
                 />
 
             <TextView
@@ -117,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        android:text="Connect"
+        android:text="@string/connect_button"
         android:layout_alignParentBottom="true"
         />
 

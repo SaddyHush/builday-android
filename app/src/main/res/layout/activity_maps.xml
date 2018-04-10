@@ -26,6 +26,7 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:contentDescription="@string/account_logo"
             android:id="@+id/btnProfile"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -38,6 +39,7 @@
 
 
         <ImageButton
+            android:contentDescription="@string/notification_button"
             android:id="@+id/notifications"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -46,7 +48,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foregroundGravity="right"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:layout_weight="0.3" />
 
         <ImageButton
