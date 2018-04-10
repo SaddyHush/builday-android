@@ -8,22 +8,17 @@ import android.widget.TextView;
 
 import com.agora.R;
 import com.agora.model.Event;
-import com.agora.model.Status;
 
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Saddy on 7/29/2017.
  */
 
-public class StatusRecyclerAdapter extends RecyclerView.Adapter<StatusRecyclerAdapter.EventHolder> {
+public class ProfileEventsRecyclerAdapter extends RecyclerView.Adapter<ProfileEventsRecyclerAdapter.EventHolder> {
     private ArrayList<Event> mEvents;
-    public StatusRecyclerAdapter(ArrayList<Event> events) {
+    public ProfileEventsRecyclerAdapter(ArrayList<Event> events) {
         mEvents = events;
     }
 

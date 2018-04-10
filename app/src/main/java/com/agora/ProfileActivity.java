@@ -38,7 +38,7 @@ import com.agora.model.Response;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.agora.utils.Constants;
-import com.agora.utils.StatusRecyclerAdapter;
+import com.agora.utils.ProfileEventsRecyclerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.yalantis.ucrop.UCrop;
@@ -72,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
     private String mToken;
     private String mEmail;
     private User user;
-    private StatusRecyclerAdapter mAdapter;
+    private ProfileEventsRecyclerAdapter mAdapter;
 
     private FloatingActionButton floatingActionButton;
 
@@ -392,7 +392,7 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         events = new ArrayList<Event>();
-        mAdapter = new StatusRecyclerAdapter(events);
+        mAdapter = new ProfileEventsRecyclerAdapter(events);
         mRecyclerView.setAdapter(mAdapter);
 
         profilePhoto.setOnClickListener(new View.OnClickListener() {

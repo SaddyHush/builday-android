@@ -29,7 +29,6 @@ import com.agora.model.Response;
 import com.agora.model.User;
 import com.agora.network.NetworkUtil;
 import com.agora.utils.Constants;
-import com.agora.utils.Notification;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -180,7 +179,9 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
 
 
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(createStoreMarker(event.getTitle())));
-        map.put(mMap.addMarker(markerOptions), event.get_id());
+        if(mMap != null) {
+            map.put(mMap.addMarker(markerOptions), event.get_id());
+        }
         mMap.setOnMarkerClickListener(marker -> {
             if (marker.equals(userClick)) {
                 return true;
@@ -280,25 +281,15 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
                 }
             }
         });
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MapsActivity.this, Notification.class));
-            }
+        notification.setOnClickListener(v -> startActivity(new Intent(MapsActivity.this, NotificationActivity.class)));
+
+        logout.setOnClickListener(v -> logout());
+
+        profileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MapsActivity.this, ProfileActivity.class);
+            startActivity(intent);
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MapsActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+
         startLocationUpdates();
     }
 

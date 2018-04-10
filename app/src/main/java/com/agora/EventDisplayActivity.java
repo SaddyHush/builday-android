@@ -47,7 +47,6 @@ public class EventDisplayActivity extends AppCompatActivity {
     private boolean connected;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +105,7 @@ public class EventDisplayActivity extends AppCompatActivity {
 
     private void getOwnerCallback(User owner){
         this.owner = owner;
-        name.setText("Creator:     " + owner.getName() + " " + owner.getSurname());
+        name.setText(owner.getName() + " " + owner.getSurname());
         if (owner.getMainPhoto() != null){
             byte[] decodedString = Base64.decode(owner.getMainPhoto(), Base64.DEFAULT);
             Bitmap photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -126,9 +125,9 @@ public class EventDisplayActivity extends AppCompatActivity {
     }
 
     private void getEventCallback(Event event){
-        title.setText("Title of event: " + event.getTitle());
-        interest.setText("Interest: " + event.getInterest());
-        maxNum.setText("Maximum number of people for this event: "+ (int)(event.getUsersLimit()));
+        title.setText(event.getTitle());
+        interest.setText(event.getInterest());
+        maxNum.setText((int)(event.getUsersLimit()) + " people");
         thisEvent = event;
         if (thisEvent.getAcceptedUserID() != null && thisEvent.getAcceptedUserID().contains(mEmail)){
             btnConnectEvent.setText("Disconnect");
