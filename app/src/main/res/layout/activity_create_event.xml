@@ -19,6 +19,7 @@
            android:id="@+id/img_logo">
 
            <ImageView
+               android:contentDescription="@string/logoImage"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:src="@drawable/logo" />
@@ -81,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ti_maxUsers"
-            android:text="Pick Event Date"
+            android:text="@string/pick_event_date"
             android:onClick="showDatePickerDialog"
             android:background="@color/colorAccent"/>
 
@@ -90,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pickDate"
-            android:text="Pick Event Time"
+            android:text="@string/pick_event_time"
             android:onClick="showTimePickerDialog"
             android:background="@color/colorAccent"/>
 
@@ -104,8 +105,8 @@
             android:layout_below="@+id/pickTime"
             android:layout_marginTop="@dimen/button_margin"
             android:drawableEnd="@drawable/ic_arrow_forward"
-            android:drawableRight="@drawable/ic_arrow_forward"
             android:paddingStart="@dimen/button_padding"
+            android:paddingEnd="@dimen/button_padding"
             android:text="@string/event_creation_hint" />
 
         <ProgressBar

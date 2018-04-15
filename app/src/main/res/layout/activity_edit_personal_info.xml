@@ -11,6 +11,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:contentDescription="@string/logoImage"
             android:id="@+id/image_logo"
             android:layout_gravity="center"
             android:layout_width="match_parent"
@@ -24,10 +25,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="78dp"
-            android:layout_below="@+id/ima"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Enter your interests"
+            android:text="@string/enter_your_interests"
             android:textAlignment="center"
             android:textSize="20sp" />
     </LinearLayout>
@@ -42,7 +42,7 @@
             android:id="@+id/enterYourInterests"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Chess, Piano, Soccer..." />
+            android:hint="@string/chess_piano_soccer" />
 
     </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:layout_height="72dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Describe yourself"
+            android:text="@string/describe_yourself"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -85,7 +85,7 @@
             android:id="@+id/bt_infosubmitbutton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:text="@string/submit_button" />
     </LinearLayout>
 
 

@@ -9,6 +9,7 @@
         android:layout_alignParentTop="false">
 
         <ImageView
+            android:contentDescription="@string/cover_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="22dp"

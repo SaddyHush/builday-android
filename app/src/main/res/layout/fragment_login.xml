@@ -33,7 +33,6 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_email"
                     android:drawableEnd="@drawable/ic_email"
                     android:hint="@string/emailHint"
                     android:inputType="textEmailAddress" />
@@ -65,10 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ti_password"
                 android:layout_marginTop="@dimen/button_margin"
-                android:drawableRight="@drawable/ic_arrow_forward"
                 android:drawableEnd="@drawable/ic_arrow_forward"
-                android:paddingLeft="@dimen/button_padding"
-                android:paddingRight="48dp"
                 android:paddingEnd="48dp"
                 android:paddingStart="@dimen/button_padding"
                 android:text="@string/loginButton"
@@ -80,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_login"
                 android:layout_marginTop="@dimen/button_margin"
-                android:text="Not registered?"
+                android:text="@string/not_registered"
                 android:textAlignment="center" />
 
             <TextView
@@ -89,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_register"
                 android:layout_marginTop="@dimen/button_margin"
-                android:text="Forgot password?"
+                android:text="@string/forgot_password"
                 android:textAlignment="center"
                 android:visibility="invisible" />
 
