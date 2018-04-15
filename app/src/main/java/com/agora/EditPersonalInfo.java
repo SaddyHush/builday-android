@@ -117,8 +117,6 @@ public class EditPersonalInfo extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mToken = mSharedPreferences.getString(Constants.TOKEN,"");
         mEmail = mSharedPreferences.getString(Constants.EMAIL,"");
-        System.out.println(mToken + "aaa" + mEmail);
-
     }
 
 

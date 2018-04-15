@@ -17,6 +17,8 @@ public class User {
     private String yourInterests;
     private String yourInfo;
     private ArrayList<String> upcomingEvents;
+    private String mainPhoto;
+    private String mainPhotoSmall;
 
     public User() {
     }
@@ -41,7 +43,13 @@ public class User {
         this.status = status;
     }
 
+    public String getMainPhotoSmall() {
+        return mainPhotoSmall;
+    }
 
+    public void setMainPhotoSmall(String mainPhotoSmall) {
+        this.mainPhotoSmall = mainPhotoSmall;
+    }
 
     public String getWorkPlace() {
         return workPlace;
@@ -76,8 +84,6 @@ public class User {
     public void setMainPhoto(String mainPhoto) {
         this. mainPhoto = mainPhoto;
     }
-
-    private String mainPhoto;
 
     public String getSurname() {
         return surname;

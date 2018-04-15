@@ -2,9 +2,12 @@ package com.agora.network;
 
 import com.agora.model.Event;
 import com.agora.model.FCMToken;
+import com.agora.model.Notification;
 import com.agora.model.Response;
 import com.agora.model.Status;
 import com.agora.model.User;
+
+import java.util.ArrayList;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -68,4 +71,13 @@ public interface RetrofitInterface {
 
     @PUT("notifications/token/update")
     Observable<Response> updateFCMToken(@Body FCMToken token);
+
+    @GET("notifications/{id}/last/{num}")
+    Observable<Notification[]> getLastXNotifications(@Path("id") String id, @Path("num") int num);
+
+    @POST("event/acceptUser")
+    Observable<Response> acceptUserToEvent(@Body String userID, @Body String eventID);
+
+    @POST("event/declineUser")
+    Observable<Response> declineUserToEvent(@Body String userID, @Body String eventID);
 }

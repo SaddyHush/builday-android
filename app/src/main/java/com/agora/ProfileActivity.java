@@ -262,14 +262,6 @@ public class ProfileActivity extends AppCompatActivity implements ChangePassword
 
     }
 
-    private void logout() {
-
-        SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putString(Constants.EMAIL,"");
-        editor.putString(Constants.TOKEN,"");
-        editor.apply();
-        finish();
-    }
 
     private void showDialog(){
 

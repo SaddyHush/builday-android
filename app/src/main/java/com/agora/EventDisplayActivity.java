@@ -106,8 +106,8 @@ public class EventDisplayActivity extends AppCompatActivity {
     private void getOwnerCallback(User owner){
         this.owner = owner;
         name.setText(owner.getName() + " " + owner.getSurname());
-        if (owner.getMainPhoto() != null){
-            byte[] decodedString = Base64.decode(owner.getMainPhoto(), Base64.DEFAULT);
+        if (owner.getMainPhotoSmall() != null){
+            byte[] decodedString = Base64.decode(owner.getMainPhotoSmall(), Base64.DEFAULT);
             Bitmap photo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             profilePhoto.setImageBitmap(photo);
 

@@ -101,7 +101,6 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
 
             mapFragment.getMapAsync(this);
             first = true;
-            initEventsOnTheMap();
         }
         updateTokenInServer(mEmail, mFCMToken);
     }
@@ -127,7 +126,9 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
     @Override
     protected void onResume() {
         super.onResume();
-        initEventsOnTheMap();
+        if (mMap != null) {
+            initEventsOnTheMap();
+        }
     }
 
     @Override
@@ -142,7 +143,9 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
 
         mapFragment.getMapAsync(this);
         first = true;
-        initEventsOnTheMap();
+        if (mMap!=null) {
+            initEventsOnTheMap();
+        }
 
     }
 
@@ -197,6 +200,7 @@ public class MapsActivity extends Activity implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+//        initEventsOnTheMap();
         googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.map_style_json));
