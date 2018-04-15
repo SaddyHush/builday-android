@@ -75,9 +75,9 @@ public interface RetrofitInterface {
     @GET("notifications/{id}/last/{num}")
     Observable<Notification[]> getLastXNotifications(@Path("id") String id, @Path("num") int num);
 
-    @POST("event/acceptUser")
-    Observable<Response> acceptUserToEvent(@Body String userID, @Body String eventID);
+    @POST("event/acceptUser/{uid}/{eid}")
+    Observable<Response> acceptUserToEvent(@Path("uid") String userID, @Path("eid") String eventID);
 
-    @POST("event/declineUser")
-    Observable<Response> declineUserToEvent(@Body String userID, @Body String eventID);
+    @POST("event/declineUser{uid}/{eid}")
+    Observable<Response> declineUserToEvent(@Path("uid") String userID, @Path("eid") String eventID);
 }
