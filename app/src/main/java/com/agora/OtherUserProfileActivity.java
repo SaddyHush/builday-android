@@ -100,6 +100,9 @@ public class OtherUserProfileActivity extends Activity {
     }
 
     private void handleSuccess(Response response) {
+        showSnackBarMessage("Done!");
+        acceptButton.setVisibility(View.INVISIBLE);
+        declineButton.setVisibility(View.INVISIBLE);
     }
 
     private void loadUserProfile() {
@@ -111,6 +114,10 @@ public class OtherUserProfileActivity extends Activity {
 
     private void userLoaded(User user) {
         this.user = user;
+        if (!user.getAppliedEvents().contains(eventID)){
+            acceptButton.setVisibility(View.INVISIBLE);
+            declineButton.setVisibility(View.INVISIBLE);
+        }
         name.setText(user.getName() + " " + user.getSurname());
         if (user.getYourInterests() != null) {
             tv_interest.setText("Interests: " + user.getYourInterests());

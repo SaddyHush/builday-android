@@ -17,6 +17,7 @@ public class User {
     private String yourInterests;
     private String yourInfo;
     private ArrayList<String> upcomingEvents;
+    private ArrayList<String> appliedEvents;
     private String mainPhoto;
     private String mainPhotoSmall;
 
@@ -29,6 +30,14 @@ public class User {
 
     public void setUpcomingEvents(ArrayList<String> upcomingEvents) {
         this.upcomingEvents = upcomingEvents;
+    }
+
+    public ArrayList<String> getAppliedEvents() {
+        return appliedEvents;
+    }
+
+    public void setAppliedEvents(ArrayList<String> appliedEvents) {
+        this.appliedEvents = appliedEvents;
     }
 
     public User(String status) {

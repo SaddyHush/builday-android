@@ -78,6 +78,6 @@ public interface RetrofitInterface {
     @POST("event/acceptUser/{uid}/{eid}")
     Observable<Response> acceptUserToEvent(@Path("uid") String userID, @Path("eid") String eventID);
 
-    @POST("event/declineUser{uid}/{eid}")
+    @POST("event/declineUser/{uid}/{eid}")
     Observable<Response> declineUserToEvent(@Path("uid") String userID, @Path("eid") String eventID);
 }
